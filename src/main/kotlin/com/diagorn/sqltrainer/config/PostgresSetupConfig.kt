@@ -25,6 +25,7 @@ class PostgresSetupConfig(
             jdbcUrl = postgresMainConnectionProperties.jdbcUrl
             username = postgresMainConnectionProperties.username
             password = postgresMainConnectionProperties.password
+            isAutoCommit = true
         }
         return HikariDataSource(config)
     }
