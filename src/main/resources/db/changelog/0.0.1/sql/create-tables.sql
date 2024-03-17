@@ -36,7 +36,7 @@ drop table if exists learning_group;
 drop table if exists lesson;
 drop table if exists employee_discipline;
 
-create table award
+create table public.award
 (
     date_recieve       date,
     employee_id        bigint        not null,
@@ -45,13 +45,13 @@ create table award
     text               varchar(2000) not null,
     primary key (id)
 );
-create table degree
+create table public.degree
 (
     id   bigint not null,
     name varchar(255),
     primary key (id)
 );
-create table department
+create table public.department
 (
     foundation_year integer,
     id              bigint not null,
@@ -60,14 +60,14 @@ create table department
     name            varchar(255),
     primary key (id)
 );
-create table discipline
+create table public.discipline
 (
     department_id bigint,
     id            bigint not null,
     name          varchar(255),
     primary key (id)
 );
-create table education_document
+create table public.education_document
 (
     giving_date     date        not null,
     employee_id     bigint      not null,
@@ -77,7 +77,7 @@ create table education_document
     university_name varchar(255),
     primary key (id)
 );
-create table employee
+create table public.employee
 (
     date_of_birth         date         not null,
     emp_record_date_start date,
@@ -99,12 +99,12 @@ create table employee
     rank                  varchar(30),
     primary key (id)
 );
-create table employee_department
+create table public.employee_department
 (
     department_id bigint not null,
     employee_id   bigint not null
 );
-create table employee_job
+create table public.employee_job
 (
     date_end          date,
     date_start        date           not null,
@@ -115,25 +115,25 @@ create table employee_job
     organization_name varchar(255)   not null,
     primary key (id)
 );
-create table employee_type
+create table public.employee_type
 (
     id   bigint not null,
     name varchar(255),
     primary key (id)
 );
-create table institute
+create table public.institute
 (
     id   bigint not null,
     name varchar(255),
     primary key (id)
 );
-create table learning_group
+create table public.learning_group
 (
     id   bigint not null,
     name varchar(255),
     primary key (id)
 );
-create table lesson
+create table public.lesson
 (
     date_end      timestamp(6),
     date_start    timestamp(6),
@@ -145,7 +145,7 @@ create table lesson
     primary key (id)
 );
 
-create table employee_discipline
+create table public.employee_discipline
 (
     discipline_id bigint not null,
     employee_id   bigint not null
