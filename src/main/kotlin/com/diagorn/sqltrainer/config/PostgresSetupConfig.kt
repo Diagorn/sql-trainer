@@ -7,6 +7,13 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.core.JdbcTemplate
 import javax.sql.DataSource
 
+/**
+ * Конфигурация основной базы данных
+ *
+ * @param postgresMainConnectionProperties - параметры подключения к основной базе данных
+ *
+ * @author Diagorn
+ */
 @Configuration
 class PostgresSetupConfig(
     val postgresMainConnectionProperties: PostgresMainConnectionProperties,

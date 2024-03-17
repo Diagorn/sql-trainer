@@ -13,6 +13,14 @@ import org.springframework.stereotype.Service
 import java.io.Writer
 import javax.sql.DataSource
 
+/**
+ * Сервис подготовки базы данных postgres к использованию с нуля
+ *
+ * @param mainJdbcTemplate - jdbcTemplate на основной базе данных. Используется для удаления и воссоздания БД
+ * @param connectionProperties - параметры подключения к тестовой базе данных
+ *
+ * @author Diagorn
+ */
 @Service
 class SetupPostgresService(
     @Qualifier("postgresMainJdbcTemplate") private val mainJdbcTemplate: JdbcTemplate,
@@ -33,6 +41,11 @@ class SetupPostgresService(
         logger.info("Удаление и воссоздание базы данных прошло успешно")
     }
 
+    /**
+     * Прогоняет миграции с нуля на созданной БД
+     *
+     * @param targetDataSource - датасорс подключения к тестовой базе данных
+     */
     fun runMigrations(targetDataSource: DataSource) {
         logger.info("Прогон миграций")
 

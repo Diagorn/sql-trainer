@@ -9,6 +9,14 @@ import org.springframework.context.annotation.Primary
 import org.springframework.jdbc.core.JdbcTemplate
 import javax.sql.DataSource
 
+/**
+ * Конфигурация тестовой базы данных
+ *
+ * @param setupPostgresService - сервис, который подготавливает бд к работе
+ * @param postgresConnectionProperties - параметры подключения к тестовой базе данных
+ *
+ * @author Diagorn
+ */
 @Configuration
 class PostgresConfig(
     private val setupPostgresService: SetupPostgresService,
