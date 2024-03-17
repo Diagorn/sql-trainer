@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: sql/fill-dictionaries.sql
+      relativeToChangelogFile: true

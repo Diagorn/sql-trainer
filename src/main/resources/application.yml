@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: sql-trainer
+
+  data:
+    mongodb:
+      uri: ${MONGO-URI:mongodb://localhost:27017/sql-trainer}
+
+    postgres:
+      jdbcUrl: ${POSTGRES-URL:jdbc:postgresql://localhost:5432/my_db}
+      username: ${POSTGRES-USER:root}
+      password: ${POSTGRES-PASSWORD:root}
+
+    postgres-test:
+      jdbcUrl: ${POSTGRES-URL:jdbc:postgresql://localhost:5432/sql_trainer}
+      username: ${POSTGRES-USER:root}
+      password: ${POSTGRES-PASSWORD:root}
+
+  liquibase:
+    enabled: false
+    liquibase-schema: public
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+  main:
+    web-application-type: servlet
+
