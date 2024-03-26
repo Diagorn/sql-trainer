@@ -3,6 +3,7 @@ import {createRouter, createWebHistory} from "vue-router";
 import AdminPanel from "@/pages/AdminPanel.vue";
 import Login from "@/pages/Login.vue";
 import Register from "@/pages/Register.vue";
+import CreateTask from "@/pages/CreateTask.vue";
 
 const routes = [
     {
@@ -20,6 +21,10 @@ const routes = [
     {
         path: '/register',
         component: Register
+    },
+    {
+        path: '/task/create',
+        component: CreateTask
     },
 ]
 
