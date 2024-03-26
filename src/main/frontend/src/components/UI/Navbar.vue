@@ -7,18 +7,16 @@ export default {
 <template>
   <v-layout class="navbar">
     <v-app-bar elevation="7" color="primary">
-      <v-toolbar-title class="title">SQL Trainer</v-toolbar-title>
+      <v-toolbar-title class="title">
+        <router-link to="/" class="nav-link">
+          <span class="nav-item">
+            SQL Trainer
+          </span>
+        </router-link>
+      </v-toolbar-title>
       <div class="nav-items">
         <v-toolbar-items>
           <v-item-group class="nav-item-group">
-            <v-item>
-              <router-link to="/about" style="text-decoration: none">
-                <span class="nav-item">
-                  О приложении
-                </span>
-              </router-link>
-            </v-item>
-            <v-spacer/>
             <v-item>
               <router-link to="/users" style="text-decoration: none">
                 <span class="nav-item">
@@ -62,5 +60,9 @@ export default {
   font-weight: normal;
   font-size: 1.2rem;
   color: white;
+}
+
+.nav-link {
+  text-decoration: none;
 }
 </style>

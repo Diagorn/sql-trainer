@@ -1,6 +1,8 @@
 import TaskList from "@/pages/TaskList.vue";
 import {createRouter, createWebHistory} from "vue-router";
 import AdminPanel from "@/pages/AdminPanel.vue";
+import Login from "@/pages/Login.vue";
+import Register from "@/pages/Register.vue";
 
 const routes = [
     {
@@ -10,6 +12,14 @@ const routes = [
     {
         path: '/users',
         component: AdminPanel
+    },
+    {
+        path: '/login',
+        component: Login
+    },
+    {
+        path: '/register',
+        component: Register
     },
 ]
 
