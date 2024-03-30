@@ -31,6 +31,15 @@ class ResultSetComparisonService {
         }
     }
 
+    /**
+     * Сравнивает результаты двух SQL-запросов на UPDATE
+     *
+     * @param userRs - ResultSet, полученный в результате пользовательского запроса
+     * @param taskRs - ResultSet, полученный в результате запроса из задания
+     * @param modifiedTableName - имя таблицы, которая подверглась изменению
+     *
+     * @return true если результаты можно считать равными друг другу
+     */
     fun compareUpdate(userRs: ResultSet, taskRs: ResultSet, modifiedTableName: String): Boolean {
         val userResults = extractData(userRs)
         val taskResults = extractData(taskRs)
