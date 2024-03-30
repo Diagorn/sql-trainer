@@ -1,9 +1,10 @@
-import TaskList from "@/pages/TaskList.vue";
+import TaskList from "@/pages/task/TaskList.vue";
 import {createRouter, createWebHistory} from "vue-router";
-import AdminPanel from "@/pages/AdminPanel.vue";
-import Login from "@/pages/Login.vue";
-import Register from "@/pages/Register.vue";
-import CreateTask from "@/pages/CreateTask.vue";
+import AdminPanel from "@/pages/admin/AdminPanel.vue";
+import Login from "@/pages/auth/Login.vue";
+import Register from "@/pages/auth/Register.vue";
+import CreateTask from "@/pages/task/CreateTask.vue";
+import TaskSolution from "@/pages/task/TaskSolution.vue";
 
 const routes = [
     {
@@ -25,6 +26,10 @@ const routes = [
     {
         path: '/task/create',
         component: CreateTask
+    },
+    {
+        path: '/task/:taskId/solve',
+        component: TaskSolution
     },
 ]
 

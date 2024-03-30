@@ -1,6 +1,6 @@
 <script>
 import {defineComponent} from 'vue'
-import AppNavbar from "@/components/UI/Navbar.vue";
+import AppNavbar from "@/components/common/Navbar.vue";
 import AppUserTable from "@/components/users/UserTable.vue";
 import AddUserDialog from "@/components/users/AddUserDialog.vue";
 

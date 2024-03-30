@@ -4,6 +4,10 @@ import {defineComponent} from 'vue'
 export default defineComponent({
   name: "app-card",
   props: {
+    objectId: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true
@@ -19,6 +23,11 @@ export default defineComponent({
     btnTitle: {
       type: String,
       required: true
+    },
+  },
+  methods: {
+    onBtnClicked() {
+      this.$emit('btnClick', this.objectId)
     }
   }
 })
@@ -28,7 +37,7 @@ export default defineComponent({
   <v-card :title="title" :subtitle="subtitle" :text="text">
     <v-card-actions>
       <v-spacer/>
-      <v-btn variant="tonal">{{btnTitle}}</v-btn>
+      <v-btn variant="tonal" @click="onBtnClicked">{{btnTitle}}</v-btn>
     </v-card-actions>
   </v-card>
 </template>

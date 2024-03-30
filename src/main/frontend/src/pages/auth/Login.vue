@@ -20,7 +20,7 @@ export default defineComponent({
 <template>
   <div class="d-flex align-center justify-center" style="height: 100vh">
     <v-sheet width="400" class="mx-auto">
-      <img src="../assets/Your-logo-here.png" alt="">
+      <img src="../../assets/Your-logo-here.png" alt="">
       <v-form fast-fail @submit.prevent="login">
         <v-text-field v-model="email" label="Электронная почта"></v-text-field>
         <v-text-field v-model="password" label="Пароль"></v-text-field>

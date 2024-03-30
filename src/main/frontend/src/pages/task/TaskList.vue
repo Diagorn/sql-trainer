@@ -1,8 +1,8 @@
 <script>
 
-import AppNavbar from "@/components/UI/Navbar.vue";
+import AppNavbar from "@/components/common/Navbar.vue";
 import {defineComponent} from "vue";
-import AppCardList from "@/components/common/cards/CardList.vue";
+import AppCardList from "@/components/UI/cards/CardList.vue";
 
 export default defineComponent({
   name: "TaskList",
@@ -11,13 +11,18 @@ export default defineComponent({
     return {
       tasks: [
         {
-          id: 1,
+          id: 'qwe',
           title: "Базовый SELECT",
           subtitle: "Обычный SQL-запрос",
           btnTitle: "Решить",
           text: "Необходимо вывести всех сотрудников, у которых зарплата меньше 15 000 рублей"
         }
       ]
+    }
+  },
+  methods: {
+    redirectToSolution(taskId) {
+      console.log(taskId)
     }
   }
 })
@@ -27,7 +32,7 @@ export default defineComponent({
   <app-navbar/>
 
   <div class="container">
-    <app-card-list :cards="tasks"/>
+    <app-card-list :cards="tasks" @onCardBtnClicked="redirectToSolution"/>
   </div>
 </template>
 

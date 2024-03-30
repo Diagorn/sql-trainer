@@ -1,6 +1,6 @@
 <script>
 import {defineComponent} from 'vue'
-import AppCard from "@/components/common/cards/Card.vue";
+import AppCard from "@/components/UI/cards/Card.vue";
 
 export default defineComponent({
   name: "app-card-list",
@@ -9,6 +9,11 @@ export default defineComponent({
     cards: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    onCardBtnClicked(objectId) {
+      this.$emit('cardBtnClicked', objectId)
     }
   }
 })
@@ -21,10 +26,12 @@ export default defineComponent({
         <app-card
             v-bind="props"
             :elevation="isHovering ? 24 : 6"
+            :objectId="card.id"
             :title="card.title"
             :btn-title="card.btnTitle"
             :subtitle="card.subtitle"
             :text="card.text"
+            @btnClick="onCardBtnClicked"
         />
       </v-hover>
     </div>
