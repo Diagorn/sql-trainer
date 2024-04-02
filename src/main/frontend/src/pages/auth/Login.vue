@@ -1,5 +1,6 @@
 <script>
 import {defineComponent} from 'vue'
+import authService from "@/services/auth.service.js";
 
 export default defineComponent({
   name: "app-login",
@@ -11,7 +12,33 @@ export default defineComponent({
   },
   methods: {
     login() {
-      // todo send to backend
+      const user = {
+        email: this.email,
+        password: this.password,
+      }
+
+      this.$store.dispatch('auth/login', user).then(
+          () => {
+            this.$router.push('/')
+          }, (error) => {
+            const message = (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            alert(error)
+          }
+      )
+    }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn
+    }
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push('/')
     }
   }
 })

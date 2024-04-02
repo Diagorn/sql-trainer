@@ -14,7 +14,37 @@ export default defineComponent({
   },
   methods: {
     register() {
-      // todo call backend
+      const user = {
+        email: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        middleName: this.middleName,
+      }
+      this.$store.dispatch('auth/register', user).then(
+          (data) => {
+            this.$router.push('/login')
+          }, (error) => {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            alert(message)
+            console.log(error)
+          }
+      )
+    }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn
+    }
+  },
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push('/')
     }
   }
 })

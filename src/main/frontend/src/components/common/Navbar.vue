@@ -1,6 +1,12 @@
 <script>
 export default {
-  name: 'app-navbar'
+  name: 'app-navbar',
+  methods: {
+    logout() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    }
+  }
 }
 </script>
 
@@ -28,7 +34,7 @@ export default {
         </v-toolbar-items>
       </div>
       <v-spacer/>
-      <v-btn variant="elevated">Выйти</v-btn>
+      <v-btn variant="elevated" @click="logout">Выйти</v-btn>
     </v-app-bar>
   </v-layout>
 </template>
