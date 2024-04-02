@@ -59,7 +59,7 @@ export default defineComponent({
         <v-text-field v-model="firstName" label="Имя"></v-text-field>
         <v-text-field v-model="lastName" label="Фамилия"></v-text-field>
         <v-text-field v-model="middleName" label="Отчество (необязательно)"></v-text-field>
-        <v-btn type="submit" color="primary" block class="mt-2">Sign in</v-btn>
+        <v-btn type="submit" color="primary" block class="mt-2">Зарегистрироваться</v-btn>
       </v-form>
       <div class="mt-2">
         <p class="text-body-2">Уже есть учетная запись? <router-link to="/login">Войти</router-link></p>

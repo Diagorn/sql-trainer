@@ -51,7 +51,7 @@ export default defineComponent({
       <v-form fast-fail @submit.prevent="login">
         <v-text-field v-model="email" label="Электронная почта"></v-text-field>
         <v-text-field v-model="password" label="Пароль" :type="'password'"></v-text-field>
-        <v-btn type="submit" color="primary" block class="mt-2">Sign in</v-btn>
+        <v-btn type="submit" color="primary" block class="mt-2">Войти</v-btn>
       </v-form>
       <div class="mt-2">
         <p class="text-body-2">Нет учетной записи? <router-link to="/register">Зарегистрироваться</router-link></p>
