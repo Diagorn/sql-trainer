@@ -20,6 +20,10 @@ export default defineComponent({
       type: String,
       required: true
     },
+    btnVisible: {
+      type: Boolean,
+      required: true,
+    },
     btnTitle: {
       type: String,
       required: true
@@ -37,7 +41,7 @@ export default defineComponent({
   <v-card :title="title" :subtitle="subtitle" :text="text">
     <v-card-actions>
       <v-spacer/>
-      <v-btn variant="tonal" @click="onBtnClicked">{{btnTitle}}</v-btn>
+      <v-btn variant="tonal" @click="onBtnClicked" v-if="btnVisible">{{btnTitle}}</v-btn>
     </v-card-actions>
   </v-card>
 </template>

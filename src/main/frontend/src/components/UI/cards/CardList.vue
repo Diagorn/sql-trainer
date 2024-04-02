@@ -9,6 +9,13 @@ export default defineComponent({
     cards: {
       type: Array,
       required: true
+    },
+    btnsVisible: {
+      type: Boolean,
+      required: false,
+      default() {
+        return true
+      }
     }
   },
   methods: {
@@ -31,6 +38,7 @@ export default defineComponent({
             :btn-title="card.btnTitle"
             :subtitle="card.subtitle"
             :text="card.text"
+            :btnVisible="btnsVisible"
             @btnClick="onCardBtnClicked"
         />
       </v-hover>

@@ -3,6 +3,7 @@
 import AppNavbar from "@/components/common/Navbar.vue";
 import {defineComponent} from "vue";
 import AppCardList from "@/components/UI/cards/CardList.vue";
+import {isAuthAsUser} from "@/helper/auth.helper.js";
 
 export default defineComponent({
   name: "TaskList",
@@ -21,6 +22,7 @@ export default defineComponent({
     }
   },
   methods: {
+    isAuthAsUser,
     redirectToSolution(taskId) {
       console.log(taskId)
     }
@@ -32,7 +34,11 @@ export default defineComponent({
   <app-navbar/>
 
   <div class="container">
-    <app-card-list :cards="tasks" @onCardBtnClicked="redirectToSolution"/>
+    <app-card-list
+        :cards="tasks"
+        :btnsVisible="isAuthAsUser()"
+        @onCardBtnClicked="redirectToSolution"
+    />
   </div>
 </template>
 
