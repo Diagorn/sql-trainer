@@ -55,7 +55,7 @@ export default defineComponent({
       <img src="../../assets/Your-logo-here.png" alt="">
       <v-form fast-fail @submit.prevent="register">
         <v-text-field v-model="email" label="Электронная почта"></v-text-field>
-        <v-text-field v-model="password" label="Пароль"></v-text-field>
+        <v-text-field v-model="password" label="Пароль" :type="'password'"></v-text-field>
         <v-text-field v-model="firstName" label="Имя"></v-text-field>
         <v-text-field v-model="lastName" label="Фамилия"></v-text-field>
         <v-text-field v-model="middleName" label="Отчество (необязательно)"></v-text-field>

@@ -50,7 +50,7 @@ export default defineComponent({
       <img src="../../assets/Your-logo-here.png" alt="">
       <v-form fast-fail @submit.prevent="login">
         <v-text-field v-model="email" label="Электронная почта"></v-text-field>
-        <v-text-field v-model="password" label="Пароль"></v-text-field>
+        <v-text-field v-model="password" label="Пароль" :type="'password'"></v-text-field>
         <v-btn type="submit" color="primary" block class="mt-2">Sign in</v-btn>
       </v-form>
       <div class="mt-2">
