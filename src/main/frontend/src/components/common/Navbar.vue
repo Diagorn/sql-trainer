@@ -1,21 +1,16 @@
 <script>
-import {getUserFioShort} from "@/helper/auth.helper.js";
+import {getUserFioShort, isAuthAsAdmin} from "@/helper/auth.helper.js";
 
 export default {
   name: 'app-navbar',
   methods: {
+    isAuthAsAdmin,
+    getUserFioShort,
     logout() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     }
   },
-  computed: {
-    userFioShort() {
-      const user = JSON.parse(localStorage.getItem('user'))
-      console.log(user)
-      return getUserFioShort(user)
-    }
-  }
 }
 </script>
 
@@ -32,7 +27,7 @@ export default {
       <div class="nav-items">
         <v-toolbar-items>
           <v-item-group class="nav-item-group">
-            <v-item>
+            <v-item v-if="isAuthAsAdmin()">
               <router-link to="/users" style="text-decoration: none">
                 <span class="nav-item">
                   Пользователи
@@ -43,7 +38,7 @@ export default {
         </v-toolbar-items>
       </div>
       <v-spacer/>
-      <span class="mr-2"> {{ userFioShort }} </span>
+      <span class="mr-2"> {{ getUserFioShort() }} </span>
       <v-btn variant="elevated" @click="logout">Выйти</v-btn>
     </v-app-bar>
   </v-layout>
