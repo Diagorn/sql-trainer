@@ -32,7 +32,6 @@ export default defineComponent({
                 error.message ||
                 error.toString();
             alert(message)
-            console.log(error)
           }
       )
     }

@@ -26,7 +26,7 @@ export default defineComponent({
                     error.response.data.message) ||
                 error.message ||
                 error.toString();
-            alert(error)
+            alert(message)
           }
       )
     }
