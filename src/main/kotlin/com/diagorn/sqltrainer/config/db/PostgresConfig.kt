@@ -1,4 +1,4 @@
-package com.diagorn.sqltrainer.config
+package com.diagorn.sqltrainer.config.db
 
 import com.diagorn.sqltrainer.service.SetupPostgresService
 import com.zaxxer.hikari.HikariConfig

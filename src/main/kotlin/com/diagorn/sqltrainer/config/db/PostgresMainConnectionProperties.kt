@@ -1,4 +1,4 @@
-package com.diagorn.sqltrainer.config
+package com.diagorn.sqltrainer.config.db
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

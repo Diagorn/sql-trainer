@@ -3,6 +3,7 @@ package com.diagorn.sqltrainer.service.user
 import com.diagorn.sqltrainer.rest.dto.EditUserRequest
 import com.diagorn.sqltrainer.rest.dto.NewUserRequest
 import com.diagorn.sqltrainer.rest.dto.UserDto
+import org.springframework.security.core.userdetails.UserDetailsService
 import java.util.UUID
 
 /**

@@ -26,3 +26,5 @@ class WrongFieldsException(message: String): BaseException(message, BAD_REQUEST)
  * Ошибка ненайденного ресурса
  */
 class NotFoundException(message: String): BaseException(message, NOT_FOUND)
+
+class WrongCredentialsException(message: String): BaseException(message, UNAUTHORIZED)

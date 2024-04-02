@@ -23,6 +23,32 @@ data class NewUserRequest(
 )
 
 /**
+ * Запрос на логин
+ *
+ * @param email - email с сайта mpei.ru
+ * @param password - пароль
+ */
+data class LoginRequest(
+    val email: String,
+    val password: String,
+)
+
+/**
+ * Ответ на логин
+ *
+ * @param token - JWT-токен
+ * @param userId - ид пользователя
+ * @param email - email пользователя
+ * @param role - роль пользователя
+ */
+data class LoginResponse(
+    val token: String,
+    val userId: String,
+    val email: String,
+    val role: String
+)
+
+/**
  * Запрос на редактирование пользователя
  *
  * @param id - ид пользователя

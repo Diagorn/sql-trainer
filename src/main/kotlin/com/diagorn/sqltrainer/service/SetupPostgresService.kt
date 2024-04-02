@@ -1,6 +1,6 @@
 package com.diagorn.sqltrainer.service
 
-import com.diagorn.sqltrainer.config.PostgresConnectionProperties
+import com.diagorn.sqltrainer.config.db.PostgresConnectionProperties
 import liquibase.Liquibase
 import liquibase.database.DatabaseFactory
 import liquibase.database.jvm.JdbcConnection

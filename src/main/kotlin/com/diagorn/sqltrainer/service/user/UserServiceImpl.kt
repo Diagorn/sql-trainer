@@ -11,6 +11,9 @@ import com.diagorn.sqltrainer.rest.dto.UserDto
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -18,11 +21,15 @@ import java.util.*
  * Реализация сервиса работы с пользователями
  *
  * @param userRepo - репозиторий работы с пользователями
+ * @param passwordEncoder - шифратор паролей
  *
  * @author Diagorn
  */
 @Service
-class UserServiceImpl(val userRepo: UserRepo): UserService {
+class UserServiceImpl(
+    val userRepo: UserRepo,
+    val passwordEncoder: PasswordEncoder
+): UserService {
 
     val logger: Logger = LoggerFactory.getLogger(javaClass)
 
@@ -34,7 +41,7 @@ class UserServiceImpl(val userRepo: UserRepo): UserService {
         val user = User(
             id = UUID.randomUUID(),
             email = request.email,
-            password = request.password, // todo зашифровать
+            usrPassword = passwordEncoder.encode(request.password),
             role = Role.USER,
             firstName = request.firstName,
             lastName = request.lastName,
@@ -57,7 +64,7 @@ class UserServiceImpl(val userRepo: UserRepo): UserService {
         val editedUser = User(
             id = user.id,
             email = user.email,
-            password = user.password,
+            usrPassword = user.usrPassword,
             role = user.role,
             firstName = request.firstName,
             lastName = request.lastName,

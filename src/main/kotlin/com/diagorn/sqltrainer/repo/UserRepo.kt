@@ -18,4 +18,13 @@ interface UserRepo: MongoRepository<User, UUID> {
      * @return true если такой пользователь найден
      */
     fun existsByEmail(email: String): Boolean
+
+    /**
+     * Найти пользователя по email
+     *
+     * @param email - заданный email
+     *
+     * @return пользователя если такой пользователь найден и null если нет
+     */
+    fun findByEmail(email: String): User?
 }
