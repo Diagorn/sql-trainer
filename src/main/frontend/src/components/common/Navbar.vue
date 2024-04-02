@@ -1,10 +1,19 @@
 <script>
+import {getUserFioShort} from "@/helper/auth.helper.js";
+
 export default {
   name: 'app-navbar',
   methods: {
     logout() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
+    }
+  },
+  computed: {
+    userFioShort() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      console.log(user)
+      return getUserFioShort(user)
     }
   }
 }
@@ -34,6 +43,7 @@ export default {
         </v-toolbar-items>
       </div>
       <v-spacer/>
+      <span class="mr-2"> {{ userFioShort }} </span>
       <v-btn variant="elevated" @click="logout">Выйти</v-btn>
     </v-app-bar>
   </v-layout>

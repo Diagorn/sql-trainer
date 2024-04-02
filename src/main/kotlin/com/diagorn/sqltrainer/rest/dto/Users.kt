@@ -40,12 +40,18 @@ data class LoginRequest(
  * @param userId - ид пользователя
  * @param email - email пользователя
  * @param role - роль пользователя
+ * @param firstName - имя
+ * @param lastName - фамилия
+ * @param middleName - отчество
  */
 data class LoginResponse(
     val token: String,
     val userId: String,
     val email: String,
-    val role: String
+    val role: String,
+    val firstName: String,
+    val lastName: String,
+    val middleName: String?,
 )
 
 /**

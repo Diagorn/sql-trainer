@@ -60,7 +60,10 @@ class AuthController(
                 token = jwt,
                 userId = user.id.toString(),
                 email = user.username,
-                role = user.role.name
+                role = user.role.name,
+                firstName = user.firstName,
+                lastName = user.lastName,
+                middleName = user.middleName,
             )
         )
         logger.info("authenticating user success: ${loginRequest.email}")
