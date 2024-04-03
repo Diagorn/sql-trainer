@@ -37,4 +37,23 @@ interface UserRepo: MongoRepository<User, UUID> {
      * @return список всех пользователей с заданной ролью
      */
     fun findByRole(role: Role): List<User>
+
+    /**
+     * Посчитать количество пользователей с заданной ролью
+     *
+     * @param role - заданная роль
+     *
+     * @return количество пользователей с такой ролью
+     */
+    fun countByRole(role: Role): Long
+
+    /**
+     * Найти пользователя с заданными id и ролью
+     *
+     * @param id - ид пользователя
+     * @param role - роль пользователя
+     *
+     * @return true если пользователь с такими id и ролью существует
+     */
+    fun existsByIdAndRole(id: UUID, role: Role): Boolean
 }

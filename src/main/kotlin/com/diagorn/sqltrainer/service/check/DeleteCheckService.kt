@@ -4,6 +4,7 @@ import com.diagorn.sqltrainer.exception.BadSqlException
 import com.diagorn.sqltrainer.exception.ComparisonFailedException
 import com.diagorn.sqltrainer.exception.UnknownException
 import com.diagorn.sqltrainer.model.mongo.Task
+import com.diagorn.sqltrainer.model.sql.DmlCommandsEnum
 import com.diagorn.sqltrainer.service.resultCompare.RawResultSetExtractor
 import com.diagorn.sqltrainer.service.resultCompare.ResultSetComparisonService
 import com.diagorn.sqltrainer.utils.validDelete
@@ -53,4 +54,6 @@ class DeleteCheckService(
     override fun doExecuteSql(sql: String) {
         jdbcTemplate.execute(sql)
     }
+
+    override fun getDmlCommand(): DmlCommandsEnum = DmlCommandsEnum.DELETE
 }

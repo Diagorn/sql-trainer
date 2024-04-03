@@ -1,10 +1,13 @@
 package com.diagorn.sqltrainer.rest.controller
 
+import com.diagorn.sqltrainer.rest.dto.EditTaskRequest
 import com.diagorn.sqltrainer.rest.dto.NewTaskRequest
 import com.diagorn.sqltrainer.rest.dto.TaskDto
+import com.diagorn.sqltrainer.rest.dto.TaskForStudentDto
 import com.diagorn.sqltrainer.service.task.TaskService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -20,10 +23,34 @@ import java.util.*
 class TasksController(val taskService: TaskService) {
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     fun addNewTask(@RequestBody request: NewTaskRequest): ResponseEntity<UUID> {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.addTask(request))
     }
 
     @GetMapping
-    fun getAll(): ResponseEntity<List<TaskDto>> = ResponseEntity.ok(taskService.getAllTasks())
+    fun getAll(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "15") size: Int,
+    ): ResponseEntity<List<TaskForStudentDto>> {
+        return ResponseEntity.ok(taskService.getAllTasks(
+            page = page,
+            size = size
+        ))
+    }
+
+    @GetMapping("/{id}")
+    fun getById(@PathVariable id: String): ResponseEntity<TaskDto> {
+        return ResponseEntity.ok(taskService.getById(UUID.fromString(id)))
+    }
+
+    @PatchMapping("/{id}")
+    fun editTask(@PathVariable id: String, editTaskRequest: EditTaskRequest) {
+        taskService.editTask(UUID.fromString(id), editTaskRequest)
+    }
+
+    @DeleteMapping("/{id}")
+    fun deleteTask(@PathVariable id: String) {
+        taskService.deleteById(UUID.fromString(id))
+    }
 }

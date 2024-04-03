@@ -21,6 +21,7 @@ data class TaskResult(
 /**
  * Запрос на создание новой задачи
  *
+ * @param title - название задачи
  * @param taskTypeIds - идентификаторы категорий задачи
  * @param description - описание задачи
  * @param weight - вес задачи
@@ -30,6 +31,28 @@ data class TaskResult(
  * @author Diagorn
  */
 data class NewTaskRequest(
+    val title: String,
+    val taskTypeIds: List<Int>,
+    val description: String,
+    val weight: Double?,
+    val solution: String,
+    val modifyingTable: String?,
+    val orderImportant: String?,
+)
+
+/**
+ * Запрос на изменение задачи
+ *
+ * @param title - название
+ * @param taskTypeIds - идентификаторы типов задания
+ * @param description - описание задания
+ * @param weight - вес задания
+ * @param solution - эталонное решение
+ * @param modifyingTable - изменяемая таблица (в случае запроса не на SELECT)
+ * @param orderImportant - важен ли порядок (в случае запроса на SELECT)
+ */
+data class EditTaskRequest(
+    val title: String,
     val taskTypeIds: List<Int>,
     val description: String,
     val weight: Double?,
@@ -41,17 +64,51 @@ data class NewTaskRequest(
  * Представление задачи для клиента
  *
  * @param id - ид задачи
+ * @param title - название задачи
  * @param taskTypes - категории задачи
+ * @param description - описание задачи
  * @param weight - вес задачи
- * @param solution - эталонное решение задачи
  *
  * @author Diagorn
  */
 data class TaskDto(
     val id: UUID,
+    val title: String,
+    val taskTypes: List<TaskTypeEnum>,
+    val description: String,
+    val weight: Double?,
+)
+
+/**
+ * Представление задачи для клиента
+ *
+ * @param id - ид задачи
+ * @param title - название задачи
+ * @param taskTypes - категории задачи
+ * @param weight - вес задачи
+ * @param solved - решил ли студент задачу или нет
+ *
+ * @author Diagorn
+ */
+data class TaskForStudentDto(
+    val id: UUID,
+    val title: String,
     val taskTypes: List<TaskTypeEnum>,
     val weight: Double?,
-    val solution: String,
+    val solved: Boolean,
+)
+
+/**
+ * Запрос на решение задачи
+ *
+ * @param taskId - ид решаемой задачи
+ * @param userSql - решение, представленное пользователем
+ *
+ * @author Diagorn
+ */
+data class SolutionRequest(
+    val taskId: UUID,
+    val userSql: String,
 )
 
 /**

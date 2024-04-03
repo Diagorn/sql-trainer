@@ -2,6 +2,7 @@ package com.diagorn.sqltrainer.service.check
 
 import com.diagorn.sqltrainer.exception.BadSqlException
 import com.diagorn.sqltrainer.model.mongo.Task
+import com.diagorn.sqltrainer.model.sql.DmlCommandsEnum
 import com.diagorn.sqltrainer.rest.dto.TaskResult
 import com.diagorn.sqltrainer.service.resultCompare.RawResultSetExtractor
 import org.springframework.jdbc.core.JdbcTemplate
@@ -161,6 +162,13 @@ abstract class AbstractSqlCheckService(
      * @param sql - выполняемый запрос
      */
     protected abstract fun doExecuteSql(sql: String)
+
+    /**
+     * Получить DML-команду, которую обрабатывает этот конкретный сервис
+     *
+     * @return DML-команда в enum-представлении
+     */
+    abstract fun getDmlCommand(): DmlCommandsEnum
 
     protected open fun selectFromTable(tableName: String): ResultSet? =
         jdbcTemplate.query("select * from $tableName", rsExtractor)
