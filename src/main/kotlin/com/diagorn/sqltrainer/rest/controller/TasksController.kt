@@ -45,11 +45,13 @@ class TasksController(val taskService: TaskService) {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     fun editTask(@PathVariable id: String, editTaskRequest: EditTaskRequest) {
         taskService.editTask(UUID.fromString(id), editTaskRequest)
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     fun deleteTask(@PathVariable id: String) {
         taskService.deleteById(UUID.fromString(id))
     }

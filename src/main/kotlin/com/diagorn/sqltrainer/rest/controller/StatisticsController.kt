@@ -4,6 +4,7 @@ import com.diagorn.sqltrainer.rest.dto.TaskStatistics
 import com.diagorn.sqltrainer.rest.dto.UserStatistics
 import com.diagorn.sqltrainer.service.statistics.StatisticsService
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -23,11 +24,13 @@ class StatisticsController(
     val statisticsService: StatisticsService
 ) {
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     fun getUserStatistics(@PathVariable userId: String): ResponseEntity<UserStatistics> {
         return ResponseEntity.ok(statisticsService.getStatisticsForUser(UUID.fromString(userId)))
     }
 
     @GetMapping("/task/{taskId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     fun getTaskStatistics(@PathVariable taskId: String): ResponseEntity<TaskStatistics> {
         return ResponseEntity.ok(statisticsService.getStatisticsForTask(UUID.fromString(taskId)))
     }
