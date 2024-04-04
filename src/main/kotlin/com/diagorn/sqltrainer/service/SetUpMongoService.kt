@@ -31,9 +31,9 @@ class SetUpMongoService(
 
     @PostConstruct
     fun init() {
-        val admins = userRepo.findByRole(Role.ADMIN)
-        if (admins.isEmpty()) {
-            val defaultAdmin = User(
+        val defaultAdmin = userRepo.findByEmail(defaultAdminEmail)
+        if (defaultAdmin == null) {
+            userRepo.save(User(
                 id = UUID.randomUUID(),
                 email = defaultAdminEmail,
                 usrPassword = passwordEncoder.encode(defaultAdminPassword),
@@ -42,8 +42,7 @@ class SetUpMongoService(
                 lastName = LAST_NAME,
                 middleName = MIDDLE_NAME,
                 avatarUrl = null
-            )
-            userRepo.save(defaultAdmin)
+            ))
         }
     }
 
