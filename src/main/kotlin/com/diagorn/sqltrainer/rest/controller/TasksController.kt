@@ -55,4 +55,9 @@ class TasksController(val taskService: TaskService) {
     fun deleteTask(@PathVariable id: String) {
         taskService.deleteById(UUID.fromString(id))
     }
+
+    @GetMapping("/pages")
+    fun getPagesCount(@RequestParam(defaultValue = "15") limit: Int): ResponseEntity<Int> {
+        return ResponseEntity.ok(taskService.getPagesCount(limit))
+    }
 }

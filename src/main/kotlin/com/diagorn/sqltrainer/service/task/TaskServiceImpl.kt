@@ -15,6 +15,7 @@ import com.diagorn.sqltrainer.rest.dto.TaskForStudentDto
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.math.ceil
 
 /**
  * Реализация сервиса задач
@@ -112,6 +113,9 @@ class TaskServiceImpl(
 
     override fun getAllTasks(page: Int, size: Int): List<TaskForStudentDto> {
 
+        // Чтобы не было проблем с поиско и пагинацией
+        if (taskRepo.count() == 0L) return listOf()
+
         val pageRequest = PageRequest.of(page, size)
         val tasksPage = taskRepo.findAll(pageRequest)
 
@@ -126,6 +130,11 @@ class TaskServiceImpl(
                 solved = false, // todo: fix
             )
         }
+    }
+
+    override fun getPagesCount(limit: Int): Int {
+        val totalTasks = taskRepo.count()
+        return ceil(totalTasks.toDouble() / limit).toInt()
     }
 
     override fun getById(id: UUID): TaskDto = doGetById(id).toDto()

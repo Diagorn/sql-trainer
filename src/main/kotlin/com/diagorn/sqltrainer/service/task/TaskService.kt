@@ -66,4 +66,13 @@ interface TaskService {
      * @param id - ид задачу
      */
     fun deleteById(id: UUID)
+
+    /**
+     * Получить количество страниц
+     *
+     * @param limit - количество задач на страницу
+     *
+     * @return количество страниц с таким количеством задач
+     */
+    fun getPagesCount(limit: Int): Int
 }
