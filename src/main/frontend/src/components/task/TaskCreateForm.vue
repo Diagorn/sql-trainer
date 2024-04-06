@@ -23,7 +23,7 @@ export default defineComponent({
   methods: {
     createTask() {
       const task = {
-        selectedTaskTypeIds: this.selectedTypes,
+        taskTypeIds: this.selectedTypes,
         title: this.title,
         weight: this.weight,
         orderImportant: this.orderImportant,

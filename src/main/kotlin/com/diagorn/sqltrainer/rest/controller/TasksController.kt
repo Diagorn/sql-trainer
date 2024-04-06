@@ -23,7 +23,7 @@ import java.util.*
 class TasksController(val taskService: TaskService) {
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     fun addNewTask(@RequestBody request: NewTaskRequest): ResponseEntity<UUID> {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.addTask(request))
     }

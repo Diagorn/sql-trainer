@@ -44,7 +44,7 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
             .csrf { it.disable() }
-            .exceptionHandling { it.authenticationEntryPoint(unauthorizedHandler) }
+//            .exceptionHandling { it.authenticationEntryPoint(unauthorizedHandler) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests {
                 it.requestMatchers("/api/v1/auth/**").permitAll()

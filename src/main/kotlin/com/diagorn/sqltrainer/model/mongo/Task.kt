@@ -20,7 +20,7 @@ import java.util.UUID
  *
  * @author Diagorn
  */
-@Document(collation = "tasks")
+@Document(collection = "tasks")
 data class Task(
     @Id var id: UUID,
     val title: String,

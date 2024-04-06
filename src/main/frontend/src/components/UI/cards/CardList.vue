@@ -22,7 +22,8 @@ export default defineComponent({
     onCardBtnClicked(objectId) {
       this.$emit('cardBtnClicked', objectId)
     }
-  }
+  },
+  emits: ['cardBtnClicked']
 })
 </script>
 
@@ -35,9 +36,9 @@ export default defineComponent({
             :elevation="isHovering ? 24 : 6"
             :objectId="card.id"
             :title="card.title"
-            :btn-title="card.btnTitle"
+            :btnTitle="card.btnTitle"
             :subtitle="card.subtitle"
-            :text="card.text"
+            :text="card.description"
             :btnVisible="btnsVisible"
             @btnClick="onCardBtnClicked"
         />
@@ -51,8 +52,10 @@ export default defineComponent({
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 10%;
 }
 
 .card {

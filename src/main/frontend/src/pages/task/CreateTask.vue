@@ -2,13 +2,18 @@
 import {defineComponent} from 'vue'
 import AppNavbar from "@/components/common/Navbar.vue";
 import AppTaskCreateForm from "@/components/task/TaskCreateForm.vue";
+import {mapActions} from "vuex";
 
 export default defineComponent({
   name: 'app-create-task',
   components: {AppTaskCreateForm, AppNavbar},
   methods: {
+    ...mapActions({
+      doCreateTask: "task/addNewTask"
+    }),
     onCreateTask(task) {
-      // todo call backend
+      this.doCreateTask(task)
+          .then(this.$router.push('/'))
     }
   }
 })

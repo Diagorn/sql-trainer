@@ -3,7 +3,7 @@
 import AppNavbar from "@/components/common/Navbar.vue";
 import {defineComponent} from "vue";
 import AppCardList from "@/components/UI/cards/CardList.vue";
-import {isAuthAsUser} from "@/helper/auth.helper.js";
+import {isAuthAsAdmin, isAuthAsUser} from "@/helper/auth.helper.js";
 import {mapActions, mapState} from "vuex";
 
 export default defineComponent({
@@ -18,9 +18,11 @@ export default defineComponent({
     ...mapActions({
       getTasks: "task/getTasks",
     }),
+    isAuthAsAdmin,
     isAuthAsUser,
     redirectToSolution(taskId) {
-      console.log(taskId) // todo actually redirect
+      const path = `/task/${taskId}/solve`
+      this.$router.push(path)
     },
     redirectToAddTask() {
       this.$router.push('/task/create')
@@ -30,8 +32,16 @@ export default defineComponent({
     ...mapState({
       tasks: state => state.task.tasks,
       totalPages: state => state.task.totalPages
-    })
+    }),
+    tasksForCards() {
+      return this.tasks.map(task => {
+        task.btnTitle = 'Решить'
+        task.subtitle = task.taskTypes.map(taskType => taskType.taskTypeName).join(',')
+        return task
+      })
+    }
   },
+  emits: ['cardBtnClicked'],
   mounted() {
     this.getTasks()
   }
@@ -42,11 +52,11 @@ export default defineComponent({
   <app-navbar/>
 
   <div class="container">
-    <v-btn variant="tonal" class="d-block ml-auto mr-0" @click="redirectToAddTask">Добавить задачу</v-btn>
+    <v-btn v-if="isAuthAsAdmin()" variant="tonal" class="d-block ml-auto mr-0 mb-3" @click="redirectToAddTask">Добавить задачу</v-btn>
     <app-card-list v-if="tasks.length"
-                   :cards="tasks"
+                   :cards="tasksForCards"
                    :btnsVisible="isAuthAsUser()"
-                   @onCardBtnClicked="redirectToSolution"
+                   @cardBtnClicked="redirectToSolution"
     />
     <h6 v-else class="text-h6">Пока что ни одной задачи нет</h6>
     <div class="position-fixed pagination-container">

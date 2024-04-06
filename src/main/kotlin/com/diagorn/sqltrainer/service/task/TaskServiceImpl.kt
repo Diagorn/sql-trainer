@@ -8,10 +8,7 @@ import com.diagorn.sqltrainer.model.sql.DmlCommandsEnum
 import com.diagorn.sqltrainer.repo.TaskRepo
 import com.diagorn.sqltrainer.repo.UserAnswerRepo
 import com.diagorn.sqltrainer.repo.UserRepo
-import com.diagorn.sqltrainer.rest.dto.EditTaskRequest
-import com.diagorn.sqltrainer.rest.dto.NewTaskRequest
-import com.diagorn.sqltrainer.rest.dto.TaskDto
-import com.diagorn.sqltrainer.rest.dto.TaskForStudentDto
+import com.diagorn.sqltrainer.rest.dto.*
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.util.*
@@ -121,12 +118,13 @@ class TaskServiceImpl(
 
         // todo add task results for @AuthenticationPrincipal
 
-        return tasksPage.content.map {
+        return tasksPage.content.map { task ->
             TaskForStudentDto(
-                id = it.id,
-                title = it.title,
-                taskTypes = it.taskTypes,
-                weight = it.weight,
+                id = task.id,
+                title = task.title,
+                description = task.description,
+                taskTypes = task.taskTypes.map { TaskTypeDto.ofEnum(it) },
+                weight = task.weight,
                 solved = false, // todo: fix
             )
         }

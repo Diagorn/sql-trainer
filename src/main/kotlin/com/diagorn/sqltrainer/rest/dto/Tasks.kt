@@ -1,6 +1,7 @@
 package com.diagorn.sqltrainer.rest.dto
 
 import com.diagorn.sqltrainer.model.mongo.TaskTypeEnum
+import com.diagorn.sqltrainer.model.sql.DmlCommandsEnum
 import java.util.UUID
 
 /**
@@ -84,6 +85,7 @@ data class TaskDto(
  *
  * @param id - ид задачи
  * @param title - название задачи
+ * @param description - описание задачи
  * @param taskTypes - категории задачи
  * @param weight - вес задачи
  * @param solved - решил ли студент задачу или нет
@@ -93,7 +95,8 @@ data class TaskDto(
 data class TaskForStudentDto(
     val id: UUID,
     val title: String,
-    val taskTypes: List<TaskTypeEnum>,
+    val description: String,
+    val taskTypes: List<TaskTypeDto>,
     val weight: Double?,
     val solved: Boolean,
 )
@@ -110,6 +113,27 @@ data class SolutionRequest(
     val taskId: UUID,
     val userSql: String,
 )
+
+/**
+ * DTO enum TaskTypeEnum
+ *
+ * @see TaskTypeEnum
+ */
+data class TaskTypeDto(
+    val id: Int,
+    val taskTypeName: String,
+    val sqlOperatorName: String,
+) {
+    companion object {
+        fun ofEnum(value: TaskTypeEnum): TaskTypeDto {
+            return TaskTypeDto(
+                id = value.id,
+                taskTypeName = value.taskTypeName,
+                sqlOperatorName = value.sqlOperator.lowerCaseCommandName
+            )
+        }
+    }
+}
 
 /**
  * Параметры сортировки задач
