@@ -75,7 +75,7 @@ data class EditTaskRequest(
 data class TaskDto(
     val id: UUID,
     val title: String,
-    val taskTypes: List<TaskTypeEnum>,
+    val taskTypes: List<TaskTypeDto>,
     val description: String,
     val weight: Double?,
 )

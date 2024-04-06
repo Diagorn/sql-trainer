@@ -2,6 +2,7 @@ package com.diagorn.sqltrainer.model.mongo
 
 import com.diagorn.sqltrainer.exception.BadStateException
 import com.diagorn.sqltrainer.rest.dto.TaskDto
+import com.diagorn.sqltrainer.rest.dto.TaskTypeDto
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.UUID
@@ -34,7 +35,7 @@ data class Task(
     fun toDto(): TaskDto = TaskDto(
         id = this.id,
         title = this.title,
-        taskTypes = this.taskTypes,
+        taskTypes = this.taskTypes.map { TaskTypeDto.ofEnum(it) },
         description = this.description,
         weight = this.weight,
     )
