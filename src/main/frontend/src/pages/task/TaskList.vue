@@ -52,7 +52,12 @@ export default defineComponent({
   <app-navbar/>
 
   <div class="container">
-    <v-btn v-if="isAuthAsAdmin()" variant="tonal" class="d-block ml-auto mr-0 mb-3" @click="redirectToAddTask">Добавить задачу</v-btn>
+    <v-btn v-if="isAuthAsAdmin()"
+           variant="tonal"
+           class="d-block ml-auto mr-0 mb-3"
+           @click="redirectToAddTask">
+      Добавить задачу
+    </v-btn>
     <app-card-list v-if="tasks.length"
                    :cards="tasksForCards"
                    :btnsVisible="isAuthAsUser()"
