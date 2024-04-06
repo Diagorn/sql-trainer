@@ -5,13 +5,14 @@ export default defineComponent({
   name: "app-task-solve-form",
   props: {
     task: {
-      type: Object,
+      type: [Object],
       required: true,
     }
   },
   data() {
     return {
       solution: '',
+      taskInfo: null,
     }
   },
   methods: {
@@ -19,19 +20,28 @@ export default defineComponent({
       this.$emit('sendSolution', this.solution)
     }
   },
+  emits: ['sendSolution'],
   computed: {
     categoriesString() {
-      return this.task.categories.map(task => task.name).join(', ')
+      console.log(this.taskInfo)
+      if (this.taskInfo) {
+        return this.taskInfo.taskTypes.map(task => task.taskTypeName).join(', ')
+      }
+
+      return ''
     }
   },
+  mounted() {
+    this.taskInfo = this.task
+  }
 })
 </script>
 
 <template>
-  <v-sheet class="pa-2 ma-2">
+  <div v-if="taskInfo" class="pa-2 ma-2">
     <h6 class="text-h6 mb-3"> {{ categoriesString }} </h6>
-    <p class="font-weight-regular mb-1">Вес - {{ task.weight }}</p>
-    <p class="text-body-1 mb-5">{{ task.description }}</p>
+    <p class="font-weight-regular mb-1">Вес - {{ taskInfo.weight }}</p>
+    <p class="text-body-1 mb-5">{{ taskInfo.description }}</p>
 
     <hr/>
 
@@ -40,7 +50,7 @@ export default defineComponent({
       <v-btn class="option" variant="plain" @click="solution = ''">Очистить</v-btn>
       <v-btn color="primary" variant="elevated" @click="send">Отправить</v-btn>
     </div>
-  </v-sheet>
+  </div>
 </template>
 
 <style scoped>

@@ -2,6 +2,8 @@
 import {defineComponent} from 'vue'
 import AppNavbar from "@/components/common/Navbar.vue";
 import AppTaskSolveForm from "@/components/task/TaskSolveForm.vue";
+import TaskService from "@/services/task.service.js";
+import SolutionService from "@/services/solution.service.js";
 
 export default defineComponent({
   name: "app-task-solution",
@@ -14,22 +16,8 @@ export default defineComponent({
   },
   data() {
     return {
-      task: {
-        title: "Базовый SELECT",
-        weight: 5,
-        description: 'Необходимо вывести сотрудников по категориям зарплаты',
-        categories: [
-          {id: 1, name: 'Базовый SELECT'},
-          {id: 2, name: 'SELECT с соединением таблиц'}
-        ],
-        btnTitle: "Решить",
-      },
-      results: {
-        percent: 87,
-        time: 95,
-        length: 65,
-        passed: true,
-      }
+      task: null,
+      results: null,
     }
   },
   methods: {
@@ -37,12 +25,19 @@ export default defineComponent({
       // todo call backend
     }
   },
-  watch: {
-    '$route.params.taskId': {
-      handler(newTaskId, oldTaskId) {
-        // todo call backend with newTaskId
-      },
-      immediate: true,
+  mounted() {
+    const taskId = this.$route.params.taskId
+    try {
+      TaskService.getById(taskId)
+          .then(res => {
+            this.task = res
+          })
+    } catch (e) {
+    }
+    try {
+      SolutionService.getLatestSolution(taskId)
+          .then(res => this.results = res)
+    } catch (e) {
     }
   },
   computed: {
@@ -69,7 +64,7 @@ export default defineComponent({
     },
     passText() {
       if (this.results.passed == null) {
-        
+
       }
     }
   }
@@ -78,16 +73,15 @@ export default defineComponent({
 
 <template>
   <app-navbar/>
-
   <div class="content">
-    <h4 class="text-h4">{{ task.title }}</h4>
+    <h4 v-if="task" class="text-h4">{{ task.title }}</h4>
     <v-container>
       <v-row>
         <v-col cols="8">
-          <app-task-solve-form :task="task" @sendSolution="send" class="left-block"/>
+          <app-task-solve-form v-if="task !== null" :task="task" @sendSolution="send" class="left-block"/>
         </v-col>
         <v-col cols="4">
-          <div class="right-block">
+          <div v-if="results" class="right-block">
             <v-sheet class="pa-2 ma-2">
               <h6 class="text-h6 mb-3"> {{ resultsPercent }} </h6>
               <p class="text-body-1"> {{ timePercent }} </p>
@@ -95,6 +89,9 @@ export default defineComponent({
 
               <h4 class="text-h4"></h4>
             </v-sheet>
+          </div>
+          <div v-else>
+            <h6 class="text-h6">Результатов решения пока нет</h6>
           </div>
         </v-col>
       </v-row>

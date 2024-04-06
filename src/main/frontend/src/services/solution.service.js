@@ -11,7 +11,7 @@ class SolutionService {
                 headers: authHeader()
             }).then(response => {
                 return response.data
-            })
+            }).catch(error => null)
     }
 
     registerNewAttempt(solution) {
