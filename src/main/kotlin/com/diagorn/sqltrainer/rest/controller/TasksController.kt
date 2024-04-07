@@ -1,9 +1,6 @@
 package com.diagorn.sqltrainer.rest.controller
 
-import com.diagorn.sqltrainer.rest.dto.EditTaskRequest
-import com.diagorn.sqltrainer.rest.dto.NewTaskRequest
-import com.diagorn.sqltrainer.rest.dto.TaskDto
-import com.diagorn.sqltrainer.rest.dto.TaskForStudentDto
+import com.diagorn.sqltrainer.rest.dto.*
 import com.diagorn.sqltrainer.service.task.TaskService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -59,5 +56,10 @@ class TasksController(val taskService: TaskService) {
     @GetMapping("/pages")
     fun getPagesCount(@RequestParam(defaultValue = "15") limit: Int): ResponseEntity<Int> {
         return ResponseEntity.ok(taskService.getPagesCount(limit))
+    }
+
+    @GetMapping("/taskTypes")
+    fun getTaskTypes(): ResponseEntity<List<TaskTypeDto>> {
+        return ResponseEntity.ok(taskService.getTaskTypes())
     }
 }

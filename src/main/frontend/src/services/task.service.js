@@ -70,6 +70,19 @@ class TaskService {
             }
         )
     }
+
+    getTaskTypes() {
+        return axios.get(API_URL + "/taskTypes", {
+            headers: authHeader(),
+        }).then(
+            response => {
+                return response.data
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    }
 }
 
 export default new TaskService()

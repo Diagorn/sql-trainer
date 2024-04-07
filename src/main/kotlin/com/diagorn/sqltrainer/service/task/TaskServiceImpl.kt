@@ -135,6 +135,10 @@ class TaskServiceImpl(
         return ceil(totalTasks.toDouble() / limit).toInt()
     }
 
+    override fun getTaskTypes(): List<TaskTypeDto> {
+        return TaskTypeEnum.entries.map { TaskTypeDto.ofEnum(it) }
+    }
+
     override fun getById(id: UUID): TaskDto = doGetById(id).toDto()
     override fun getEntityById(id: UUID): Task = doGetById(id)
 

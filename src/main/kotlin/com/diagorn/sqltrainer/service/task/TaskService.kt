@@ -1,10 +1,7 @@
 package com.diagorn.sqltrainer.service.task
 
 import com.diagorn.sqltrainer.model.mongo.Task
-import com.diagorn.sqltrainer.rest.dto.EditTaskRequest
-import com.diagorn.sqltrainer.rest.dto.NewTaskRequest
-import com.diagorn.sqltrainer.rest.dto.TaskDto
-import com.diagorn.sqltrainer.rest.dto.TaskForStudentDto
+import com.diagorn.sqltrainer.rest.dto.*
 import java.util.*
 
 /**
@@ -75,4 +72,9 @@ interface TaskService {
      * @return количество страниц с таким количеством задач
      */
     fun getPagesCount(limit: Int): Int
+
+    /**
+     * Получить все категории задач
+     */
+    fun getTaskTypes(): List<TaskTypeDto>
 }
