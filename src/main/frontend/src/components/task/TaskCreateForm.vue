@@ -1,16 +1,14 @@
 <script>
 import {defineComponent} from 'vue'
+import TaskService from "@/services/task.service.js";
+import AppRadio from "@/components/common/Radio.vue";
 
 export default defineComponent({
   name: "app-task-create-form",
+  components: {AppRadio},
   data() {
     return {
-      types: [
-        {id: 1, name: 'Базовый SELECT'},
-        {id: 2, name: 'Базовый UPDATE'},
-        {id: 3, name: 'Базовый DELETE'},
-        {id: 4, name: 'Базовый INSERT'},
-      ],
+      types: [],
       selectedTypes: [],
       title: '',
       weight: null,
@@ -32,7 +30,14 @@ export default defineComponent({
         changingTable: this.changingTable
       }
       this.$emit('createTask', task)
+    },
+    fetchTaskTypes() {
+      TaskService.getTaskTypes()
+          .then(res => this.types = res)
     }
+  },
+  mounted() {
+    this.fetchTaskTypes()
   }
 })
 </script>
@@ -47,8 +52,9 @@ export default defineComponent({
         v-model="selectedTypes"
         label="Выберите тип"
         :items="types"
-        item-title="name"
+        item-title="taskTypeName"
         item-value="id"
+        no-data-text="Пожалуйста, подождите..."
         multiple>
     </v-select>
 
@@ -61,10 +67,21 @@ export default defineComponent({
     >
     </v-text-field>
 
-    <v-label class="mt-4">Порядок сортировки важен</v-label>
-    <v-radio-group inline v-model="orderImportant">
-      <v-radio label="Нет" :value="false"></v-radio>
-      <v-radio label="Да" :value="true" class="ml-2"></v-radio>
+    <v-label class="mt-5">Порядок сортировки важен?</v-label>
+    <v-radio-group inline v-model="orderImportant" class="mt-2">
+      <app-radio name="orderImportant"
+                 v-model="orderImportant"
+                 label="Нет"
+                 @change="orderImportant = false"
+                 :value="false">
+      </app-radio>
+      <app-radio v-model="orderImportant"
+                 name="orderImportant"
+                 label="Да"
+                 :value="true"
+                 @change="orderImportant = true"
+                 class="ml-2">
+      </app-radio>
     </v-radio-group>
 
     <v-label>Описание</v-label>
