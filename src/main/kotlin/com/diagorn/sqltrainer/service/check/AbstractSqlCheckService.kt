@@ -1,10 +1,11 @@
 package com.diagorn.sqltrainer.service.check
 
 import com.diagorn.sqltrainer.exception.BadSqlException
+import com.diagorn.sqltrainer.model.common.Row
 import com.diagorn.sqltrainer.model.mongo.Task
 import com.diagorn.sqltrainer.model.sql.DmlCommandsEnum
 import com.diagorn.sqltrainer.rest.dto.TaskResult
-import com.diagorn.sqltrainer.service.resultCompare.RawResultSetExtractor
+import com.diagorn.sqltrainer.service.resultCompare.RowResultSetExtractor
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.datasource.DataSourceTransactionManager
 import org.springframework.transaction.TransactionDefinition
@@ -25,7 +26,7 @@ import kotlin.properties.Delegates
 abstract class AbstractSqlCheckService(
     private val transactionManager: DataSourceTransactionManager,
     private val jdbcTemplate: JdbcTemplate,
-    private val rsExtractor: RawResultSetExtractor,
+    private val rsExtractor: RowResultSetExtractor,
 ) {
 
     /**
@@ -42,8 +43,8 @@ abstract class AbstractSqlCheckService(
 
         val sqlExecutionTime: Long
         val taskSqlExecutionTime: Long
-        val queryResults: ResultSet?
-        val taskQueryResults: ResultSet?
+        val queryResults: List<Row>
+        val taskQueryResults: List<Row>
 
         // Выполняем пользовательский SQL
         val sqlResult = doExecute(sql, task)
@@ -80,8 +81,8 @@ abstract class AbstractSqlCheckService(
     private fun doExecute(
         sql: String,
         task: Task,
-    ): Pair<ResultSet?, Long> {
-        val queryResults: ResultSet?
+    ): Pair<List<Row>, Long> {
+        val queryResults: List<Row>
         var sqlExecutionTime by Delegates.notNull<Long>()
         try {
             val transactionStatus = beginTransaction()
@@ -101,19 +102,19 @@ abstract class AbstractSqlCheckService(
     }
 
     private fun countExecutionTimeDifference(sqlExecutionTime: Long, taskSqlExecutionTime: Long): Double {
-        var executionTimeDifference = 1.0;
+        var executionTimeDifference = 100.0;
         if (sqlExecutionTime > taskSqlExecutionTime && sqlExecutionTime != 0L && taskSqlExecutionTime != 0L) {
             executionTimeDifference =
-                (sqlExecutionTime.toDouble() - taskSqlExecutionTime.toDouble()) / taskSqlExecutionTime * 100
+                100.0 - (sqlExecutionTime.toDouble() - taskSqlExecutionTime.toDouble()) / taskSqlExecutionTime * 100
         }
         return executionTimeDifference
     }
 
     private fun countSqlLengthDifference(sql: String, taskSql: String): Double {
-        var sqlLengthDifference = 1.0
+        var sqlLengthDifference = 100.0
         if (sql.length > taskSql.length) {
             sqlLengthDifference =
-                (sql.length.toDouble() - taskSql.length.toDouble()) / taskSql.length * 100
+                100.0 - (sql.length.toDouble() - taskSql.length.toDouble()) / taskSql.length * 100
         }
         return sqlLengthDifference
     }
@@ -138,13 +139,13 @@ abstract class AbstractSqlCheckService(
     /**
      * Сравнить равенство двух ResultSet'ов
      *
-     * @param userRs - ResultSet, полученный в результате пользовательского запроса
-     * @param taskRs - ResultSet, полученный в результате запроса из задачи
+     * @param userRs - результат, полученный в результате пользовательского запроса
+     * @param taskRs - результат, полученный в результате запроса из задачи
      * @param task - решаемая задача
      *
      * @return true, если результаты можно считать одинаковыми. Если что-то пошло не так - выбросить ошибку
      */
-    protected abstract fun compareEquality(userRs: ResultSet?, taskRs: ResultSet?, task: Task): Boolean
+    protected abstract fun compareEquality(userRs: List<Row>, taskRs: List<Row>, task: Task): Boolean
 
     /**
      * Получить результаты запроса для проверки
@@ -154,7 +155,7 @@ abstract class AbstractSqlCheckService(
      *
      * @return результаты запроса
      */
-    protected abstract fun getQueryResults(sql: String, task: Task): ResultSet?
+    protected abstract fun getQueryResults(sql: String, task: Task): List<Row>
 
     /**
      * Выполнить проверяемый SQL-запрос
@@ -170,8 +171,8 @@ abstract class AbstractSqlCheckService(
      */
     abstract fun getDmlCommand(): DmlCommandsEnum
 
-    protected open fun selectFromTable(tableName: String): ResultSet? =
-        jdbcTemplate.query("select * from $tableName", rsExtractor)
+    protected open fun selectFromTable(tableName: String): List<Row> =
+        jdbcTemplate.query("select * from $tableName", rsExtractor) ?: listOf() // todo мб вставить пустой ряд с названиями колонок?
 
     companion object {
         const val WRONG_SQL = "Для ожидаемой команды замечена неправильная команда внутри запроса"

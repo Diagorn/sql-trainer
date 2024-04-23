@@ -1,13 +1,13 @@
 import axios from "axios";
 import authHeader from "@/services/auth-header.js";
 
-const API_URL = 'http://localhost:8080/api/v1/solution/'
+const API_URL = 'http://localhost:8080/api/v1/solution'
 
 class SolutionService {
 
     getLatestSolution(taskId) {
         return axios
-            .get(API_URL + taskId, {
+            .get(API_URL + '/' + taskId, {
                 headers: authHeader()
             }).then(response => {
                 return response.data
@@ -15,6 +15,7 @@ class SolutionService {
     }
 
     registerNewAttempt(solution) {
+        console.log(solution)
         return axios
             .post(API_URL, solution, {
                 headers: authHeader(),

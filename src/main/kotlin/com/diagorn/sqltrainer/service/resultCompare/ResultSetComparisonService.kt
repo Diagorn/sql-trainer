@@ -1,5 +1,6 @@
 package com.diagorn.sqltrainer.service.resultCompare
 
+import com.diagorn.sqltrainer.model.common.Row
 import org.springframework.stereotype.Service
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
@@ -10,63 +11,39 @@ class ResultSetComparisonService {
     /**
      * Сравнивает результаты двух SQL-запросов на SELECT
      *
-     * @param userRs - ResultSet, полученный в результате пользовательского запроса
-     * @param taskRs - ResultSet, полученный в результате запроса из задания
+     * @param userRs - результат, полученный в результате пользовательского запроса
+     * @param taskRs - результат, полученный в результате запроса из задания
      * @param orderImportant - важен ли порядок строк в ответе (есть ли сортировка)
      *
      * @return true если результаты можно считать равными друг другу
      */
-    fun compareSelect(userRs: ResultSet, taskRs: ResultSet, orderImportant: Boolean): Boolean {
-        val userResults = extractData(userRs)
-        val taskResults = extractData(taskRs)
-
-        if (userResults.size != taskResults.size) {
+    fun compareSelect(userRs: List<Row>, taskRs: List<Row>, orderImportant: Boolean): Boolean {
+        if (userRs.size != taskRs.size) {
             return false
         }
 
         return if (orderImportant) {
-            compareEqualityWithOrder(userResults, taskResults)
+            compareEqualityWithOrder(userRs, taskRs)
         } else {
-            compareEqualityWithoutOrder(userResults, taskResults)
+            compareEqualityWithoutOrder(userRs, taskRs)
         }
     }
 
     /**
      * Сравнивает результаты двух SQL-запросов на UPDATE
      *
-     * @param userRs - ResultSet, полученный в результате пользовательского запроса
-     * @param taskRs - ResultSet, полученный в результате запроса из задания
+     * @param userRs - результат, полученный в результате пользовательского запроса
+     * @param taskRs - результат, полученный в результате запроса из задания
      * @param modifiedTableName - имя таблицы, которая подверглась изменению
      *
      * @return true если результаты можно считать равными друг другу
      */
-    fun compareUpdate(userRs: ResultSet, taskRs: ResultSet, modifiedTableName: String): Boolean {
-        val userResults = extractData(userRs)
-        val taskResults = extractData(taskRs)
-
-        if (userResults.size != taskResults.size) {
+    fun compareUpdate(userRs: List<Row>, taskRs: List<Row>, modifiedTableName: String): Boolean {
+        if (userRs.size != taskRs.size) {
             return false
         }
 
-        return compareEqualityWithoutOrder(userResults, taskResults)
-    }
-
-    private fun extractData(rs: ResultSet): List<Row> {
-        val resultList = ArrayList<LinkedHashMap<String, Any>>()
-        val metaData: ResultSetMetaData = rs.metaData
-        val columnCount = metaData.columnCount
-
-        while (rs.next()) {
-            val row = LinkedHashMap<String, Any>()
-            for (i in 1..columnCount) {
-                val columnName = metaData.getColumnName(i)
-                val value = rs.getObject(i)
-                row[columnName] = value
-            }
-            resultList.add(row)
-        }
-
-        return resultList.map { Row(it) }
+        return compareEqualityWithoutOrder(userRs, taskRs)
     }
 
     private fun compareEqualityWithOrder(
@@ -99,8 +76,8 @@ class ResultSetComparisonService {
             return true
         }
 
-        val userResultsMap = mutableMapOf<LinkedHashMap<String, Any>, Int>()
-        val taskResultsMap = mutableMapOf<LinkedHashMap<String, Any>, Int>()
+        val userResultsMap = mutableMapOf<LinkedHashMap<String, Any?>, Int>()
+        val taskResultsMap = mutableMapOf<LinkedHashMap<String, Any?>, Int>()
 
         for (row in userResults) {
             userResultsMap.merge(row.map, 1) { a, b -> a + b }
@@ -137,25 +114,4 @@ class ResultSetComparisonService {
 
         return false
     }
-}
-
-private class Row(
-    val map: LinkedHashMap<String, Any>
-) : Comparable<Row> {
-    override fun compareTo(other: Row): Int {
-        val thisEntries = map.entries.sortedBy { it.key }
-        val otherEntries = other.map.entries.sortedBy { it.key }
-
-        for (i in thisEntries.indices) {
-            if (thisEntries[i].key != otherEntries[i].key || thisEntries[i].value != otherEntries[i].value) {
-                return 1
-            }
-        }
-
-        return 0
-    }
-
-    fun isEqualTo(other: Row) = this.compareTo(other) == 0
-
-    fun toList() = map.toList()
 }

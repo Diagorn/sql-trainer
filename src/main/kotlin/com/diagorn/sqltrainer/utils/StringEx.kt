@@ -17,11 +17,13 @@ fun String.validSelect(): Boolean {
     }
 
     // Проверяем, что нет комманд кроме SELECT'а
-    val hurtfulCommandNames = DmlCommandsEnum.entries.map { it.name.uppercase() }.toMutableList().also { list ->
-        list.addAll(
-            DdlCommandsEnum.entries.filter { it.name != SELECT.name }.map { it.name.uppercase() }
-        )
-    }
+    val hurtfulCommandNames = DmlCommandsEnum.entries
+        .filter { it.name != SELECT.name }
+        .map { it.name.uppercase() }.toMutableList().apply {
+            addAll(
+                DdlCommandsEnum.entries.filter { it.name != SELECT.name }.map { it.name.uppercase() }
+            )
+        }
     return !uppercased.containsAny(hurtfulCommandNames)
 }
 
@@ -36,7 +38,8 @@ fun String.validUpdate(): Boolean {
     // Проверяем, что нет других команд (SELECT допустим)
     val hurtfulCommandNames = DmlCommandsEnum.entries.map { it.name.uppercase() }.toMutableList().also { list ->
         list.addAll(
-            DdlCommandsEnum.entries.filter { it.name != SELECT.name && it.name != UPDATE.name }.map { it.name.uppercase() }
+            DdlCommandsEnum.entries.filter { it.name != SELECT.name && it.name != UPDATE.name }
+                .map { it.name.uppercase() }
         )
     }
 
@@ -54,7 +57,8 @@ fun String.validInsert(): Boolean {
     // Проверяем, что нет других команд (SELECT допустим)
     val hurtfulCommandNames = DmlCommandsEnum.entries.map { it.name.uppercase() }.toMutableList().also { list ->
         list.addAll(
-            DdlCommandsEnum.entries.filter { it.name != SELECT.name && it.name != INSERT.name }.map { it.name.uppercase() }
+            DdlCommandsEnum.entries.filter { it.name != SELECT.name && it.name != INSERT.name }
+                .map { it.name.uppercase() }
         )
     }
 
@@ -72,7 +76,8 @@ fun String.validDelete(): Boolean {
     // Проверяем, что нет других команд (SELECT допустим)
     val hurtfulCommandNames = DmlCommandsEnum.entries.map { it.name.uppercase() }.toMutableList().also { list ->
         list.addAll(
-            DdlCommandsEnum.entries.filter { it.name != SELECT.name && it.name != DELETE.name }.map { it.name.uppercase() }
+            DdlCommandsEnum.entries.filter { it.name != SELECT.name && it.name != DELETE.name }
+                .map { it.name.uppercase() }
         )
     }
 

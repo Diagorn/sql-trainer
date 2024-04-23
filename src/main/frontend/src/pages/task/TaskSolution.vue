@@ -21,8 +21,17 @@ export default defineComponent({
     }
   },
   methods: {
-    send(solution) {
-      // todo call backend
+    send(solutionStr) {
+      const solutionObj = {
+        userSql: solutionStr,
+        taskId: this.$route.params.taskId,
+      }
+      SolutionService.registerNewAttempt(solutionObj)
+          .then(res => {
+            console.log(res)
+            this.results = res
+          })
+          .catch(() => this.results = null)
     }
   },
   mounted() {
@@ -37,36 +46,32 @@ export default defineComponent({
     try {
       SolutionService.getLatestSolution(taskId)
           .then(res => this.results = res)
+          .catch(() => this.results = null)
     } catch (e) {
     }
   },
   computed: {
     resultsPercent() {
-      if (!this.results.percent) {
+      if (!this.results.contentsEqual) {
         return ''
       }
 
-      return this.results.percent + '%'
+      return '100%'
     },
     timePercent() {
-      if (!this.results.time) {
+      if (!this.results.executionTimeDifference) {
         return ''
       }
 
-      return `Время - ${this.results.time}%`
+      return `Время - ${this.results.executionTimeDifference}%`
     },
     lengthPercent() {
-      if (!this.results.length) {
+      if (!this.results.contentLengthDifference) {
         return ''
       }
 
-      return `Длина запроса - ${this.results.length}%`
+      return `Длина запроса - ${this.results.contentLengthDifference}%`
     },
-    passText() {
-      if (this.results.passed == null) {
-
-      }
-    }
   }
 })
 </script>
