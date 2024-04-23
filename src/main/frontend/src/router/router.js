@@ -5,6 +5,7 @@ import Login from "@/pages/auth/Login.vue";
 import Register from "@/pages/auth/Register.vue";
 import CreateTask from "@/pages/task/CreateTask.vue";
 import TaskSolution from "@/pages/task/TaskSolution.vue";
+import UserStatisticsPage from "@/pages/statistics/UserStatisticsPage.vue";
 
 const routes = [
     {
@@ -31,6 +32,10 @@ const routes = [
         path: '/task/:taskId/solve',
         component: TaskSolution
     },
+    {
+        path: '/user/:userId/statistics',
+        component: UserStatisticsPage
+    }
 ]
 
 const router = createRouter({

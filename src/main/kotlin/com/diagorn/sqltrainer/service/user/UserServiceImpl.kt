@@ -78,6 +78,17 @@ class UserServiceImpl(
         return editedUser.toDto()
     }
 
+    override fun findUsers(): List<UserDto> =
+        userRepo.findAll().map { it.toDto() }
+
+    override fun findById(userId: UUID): User {
+        val userFromDB = userRepo.findById(userId)
+        if (userFromDB.isEmpty) {
+            throw NotFoundException("Пользователь с id = $userId не найден")
+        }
+        return userFromDB.get()
+    }
+
     private fun getById(id: UUID): User {
         return userRepo.findByIdOrNull(id) ?: throw NotFoundException("Не найден пользователь с ID = $id")
     }

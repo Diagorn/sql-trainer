@@ -15,7 +15,6 @@ class SolutionService {
     }
 
     registerNewAttempt(solution) {
-        console.log(solution)
         return axios
             .post(API_URL, solution, {
                 headers: authHeader(),

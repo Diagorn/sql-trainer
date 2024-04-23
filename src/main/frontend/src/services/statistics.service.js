@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "@/services/auth-header.js";
 
-const API_URL = 'http://localhost:8080/api/v1/statistics/'
+const API_URL = 'http://localhost:8080/api/v1/statistics'
 
 class StatisticsService {
 

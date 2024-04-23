@@ -23,7 +23,6 @@ export default defineComponent({
   emits: ['sendSolution'],
   computed: {
     categoriesString() {
-      console.log(this.taskInfo)
       if (this.taskInfo) {
         return this.taskInfo.taskTypes.map(task => task.taskTypeName).join(', ')
       }

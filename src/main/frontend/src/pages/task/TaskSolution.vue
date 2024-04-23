@@ -28,7 +28,6 @@ export default defineComponent({
       }
       SolutionService.registerNewAttempt(solutionObj)
           .then(res => {
-            console.log(res)
             this.results = res
           })
           .catch(() => this.results = null)

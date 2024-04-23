@@ -42,6 +42,9 @@ export default defineComponent({
         <v-btn variant="tonal">
           Восстановить пароль
         </v-btn>
+        <v-btn @click="this.$router.push(`/user/${user.id}/statistics`)">
+          К статистике
+        </v-btn>
       </v-btn-group>
     </td>
   </tr>
