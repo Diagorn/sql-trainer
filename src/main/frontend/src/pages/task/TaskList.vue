@@ -5,6 +5,7 @@ import {defineComponent} from "vue";
 import AppCardList from "@/components/UI/cards/CardList.vue";
 import {isAuthAsAdmin, isAuthAsUser} from "@/helper/auth.helper.js";
 import {mapActions, mapState} from "vuex";
+import TaskService from "@/services/task.service.js";
 
 export default defineComponent({
   name: "TaskList",
@@ -17,6 +18,7 @@ export default defineComponent({
   methods: {
     ...mapActions({
       getTasks: "task/getTasks",
+      deleteTask: "task/deleteTask",
     }),
     isAuthAsAdmin,
     isAuthAsUser,
@@ -26,6 +28,9 @@ export default defineComponent({
     },
     redirectToAddTask() {
       this.$router.push('/task/create')
+    },
+    doDeleteTask(objectId) {
+      this.deleteTask(objectId)
     }
   },
   computed: {
@@ -62,6 +67,7 @@ export default defineComponent({
                    :cards="tasksForCards"
                    :btnsVisible="isAuthAsUser()"
                    @cardBtnClicked="redirectToSolution"
+                   @cardBtnCloseClicked="doDeleteTask"
     />
     <h6 v-else class="text-h6">Пока что ни одной задачи нет</h6>
     <div class="position-fixed pagination-container">

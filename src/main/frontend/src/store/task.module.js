@@ -75,11 +75,12 @@ export const task = {
                 )
         },
 
-        deleteTask({commit}, taskId) {
+        deleteTask({commit, state}, taskId) {
+            console.log(taskId)
             return TaskService.deleteTask(taskId)
                 .then(
                     response => {
-                        commit('setLastTaskId', null)
+                        commit('setTasks', taskId)
                         return Promise.resolve(response)
                     },
                     error => {
@@ -99,6 +100,10 @@ export const task = {
         },
         setTotalPages(state, totalPages) {
             state.totalPages = totalPages
-        }
+        },
+        setTasks(state, deletedTaskId) {
+            state.tasks = state.tasks.filter(task => task.id !== deletedTaskId)
+            state.lastTaskId = null
+        },
     }
 }

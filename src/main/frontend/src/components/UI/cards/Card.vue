@@ -1,5 +1,6 @@
 <script>
 import {defineComponent} from 'vue'
+import 'material-icons/iconfont/material-icons.css';
 
 export default defineComponent({
   name: "app-card",
@@ -32,16 +33,27 @@ export default defineComponent({
   methods: {
     onBtnClicked() {
       this.$emit('btnClick', this.objectId)
+    },
+    onCloseBtnClicked() {
+      this.$emit('closeClick', this.objectId)
     }
-  }
+  },
+  emits: ['closeClick'],
 })
 </script>
 
 <template>
   <v-card :title="title" :subtitle="subtitle" :text="text">
+    <template v-slot:append>
+      <v-btn variant="text" @click.prevent="onCloseBtnClicked">
+        <span class="material-icons">
+          close
+        </span>
+      </v-btn>
+    </template>
     <v-card-actions>
       <v-spacer/>
-      <v-btn variant="tonal" @click="onBtnClicked" v-if="btnVisible">{{btnTitle}}</v-btn>
+      <v-btn variant="tonal" @click="onBtnClicked" v-if="btnVisible">{{ btnTitle }}</v-btn>
     </v-card-actions>
   </v-card>
 </template>
