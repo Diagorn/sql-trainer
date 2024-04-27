@@ -29,6 +29,9 @@ export default defineComponent({
     redirectToAddTask() {
       this.$router.push('/task/create')
     },
+    redirectToTaskStatistics(taskId) {
+      this.$router.push(`/task/${taskId}/statistics`)
+    },
     doDeleteTask(objectId) {
       this.deleteTask(objectId)
     }
@@ -69,6 +72,7 @@ export default defineComponent({
                    :closeBtnVisible="isAuthAsAdmin()"
                    @cardBtnClicked="redirectToSolution"
                    @cardBtnCloseClicked="doDeleteTask"
+                   @cardBtnQuestionClicked="redirectToTaskStatistics"
     />
     <h6 v-else class="text-h6">Пока что ни одной задачи нет</h6>
     <div class="position-fixed pagination-container">

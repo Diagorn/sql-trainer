@@ -28,9 +28,12 @@ export default defineComponent({
     },
     onCardBtnCloseClicked(objectId) {
       this.$emit('cardBtnCloseClicked', objectId)
+    },
+    onCardBtnQuestionClicked(objectId) {
+      this.$emit('cardBtnQuestionClicked', objectId)
     }
   },
-  emits: ['cardBtnClicked', 'cardBtnCloseClicked']
+  emits: ['cardBtnClicked', 'cardBtnCloseClicked', 'cardBtnQuestionClicked']
 })
 </script>
 
@@ -50,6 +53,7 @@ export default defineComponent({
             :closeBtnVisible="closeBtnVisible"
             @btnClick="onCardBtnClicked"
             @closeClick="onCardBtnCloseClicked"
+            @questionClick="onCardBtnQuestionClicked"
         />
       </v-hover>
     </div>

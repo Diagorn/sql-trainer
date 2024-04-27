@@ -40,15 +40,23 @@ export default defineComponent({
     },
     onCloseBtnClicked() {
       this.$emit('closeClick', this.objectId)
+    },
+    onQuestionClicked() {
+      this.$emit('questionClick', this.objectId)
     }
   },
-  emits: ['closeClick'],
+  emits: ['btnClick', 'closeClick', 'questionClick'],
 })
 </script>
 
 <template>
   <v-card :title="title" :subtitle="subtitle" :text="text">
     <template v-slot:append v-if="closeBtnVisible">
+      <v-btn variant="text" @click.prevent="onQuestionClicked">
+        <span class="material-icons">
+          question_mark
+        </span>
+      </v-btn>
       <v-btn variant="text" @click.prevent="onCloseBtnClicked">
         <span class="material-icons">
           close
