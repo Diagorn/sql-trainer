@@ -66,6 +66,7 @@ export default defineComponent({
     <app-card-list v-if="tasks.length"
                    :cards="tasksForCards"
                    :btnsVisible="isAuthAsUser()"
+                   :closeBtnVisible="isAuthAsAdmin()"
                    @cardBtnClicked="redirectToSolution"
                    @cardBtnCloseClicked="doDeleteTask"
     />

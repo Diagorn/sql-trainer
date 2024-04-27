@@ -16,6 +16,10 @@ export default defineComponent({
       default() {
         return true
       }
+    },
+    closeBtnVisible: {
+      type: Boolean,
+      required: true,
     }
   },
   methods: {
@@ -43,6 +47,7 @@ export default defineComponent({
             :subtitle="card.subtitle"
             :text="card.description"
             :btnVisible="btnsVisible"
+            :closeBtnVisible="closeBtnVisible"
             @btnClick="onCardBtnClicked"
             @closeClick="onCardBtnCloseClicked"
         />

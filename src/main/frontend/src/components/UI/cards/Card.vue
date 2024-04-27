@@ -29,6 +29,10 @@ export default defineComponent({
       type: String,
       required: true
     },
+    closeBtnVisible: {
+      type: Boolean,
+      required: true,
+    }
   },
   methods: {
     onBtnClicked() {
@@ -44,7 +48,7 @@ export default defineComponent({
 
 <template>
   <v-card :title="title" :subtitle="subtitle" :text="text">
-    <template v-slot:append>
+    <template v-slot:append v-if="closeBtnVisible">
       <v-btn variant="text" @click.prevent="onCloseBtnClicked">
         <span class="material-icons">
           close
