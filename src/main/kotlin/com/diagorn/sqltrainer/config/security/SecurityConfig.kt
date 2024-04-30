@@ -49,6 +49,7 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it.requestMatchers("/api/v1/auth/**").permitAll()
                     .requestMatchers("/api/v1/test/**").permitAll()
+                    .requestMatchers("/").permitAll()
                     .anyRequest().authenticated()
             }.authenticationProvider(authProvider())
             .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter::class.java)
