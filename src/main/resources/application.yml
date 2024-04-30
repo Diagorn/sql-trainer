@@ -12,7 +12,7 @@ spring:
       password: ${POSTGRES-PASSWORD:root}
 
     postgres-test:
-      jdbcUrl: ${POSTGRES-URL:jdbc:postgresql://localhost:5432/sql_trainer}
+      jdbcUrl: ${POSTGRES-TEST-URL:jdbc:postgresql://localhost:5432/sql_trainer}
       username: ${POSTGRES-USER:root}
       password: ${POSTGRES-PASSWORD:root}
 

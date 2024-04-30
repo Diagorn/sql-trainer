@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  sql-trainer-mongo:
+    container_name: sql-trainer-mongo
+    image: 'mongo:latest'
+    restart: always
+    ports:
+      - "27017:27017"
+
+  sql-trainer-postgres:
+    container_name: sql-trainer-postgres
+    image: 'postgres:latest'
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: my_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend
+    image: 'sql-trainer:latest'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES-URL: jdbc:postgresql://sql-trainer-postgres:5432/my_db
+      POSTGRES-TEST-URL: jdbc:postgresql://sql-trainer-postgres:5432/sql_trainer
+      MONGO-URI: mongodb://sql-trainer-mongo:27017/sql-trainer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sql-trainer-mongo
+      - sql-trainer-postgres
+
+volumes:
+  pgdata: {}
