@@ -1,4 +1,4 @@
-import com.moowork.gradle.node.npm.NpmTask
+//import com.moowork.gradle.node.npm.NpmTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -6,7 +6,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	kotlin("jvm") version "1.9.22"
 	kotlin("plugin.spring") version "1.9.22"
-	id("com.github.node-gradle.node") version "2.2.2"
+//	id("com.github.node-gradle.node") version "2.2.2"
 }
 
 group = "com.diagorn"
@@ -37,15 +37,15 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-node {
-	version = "18.16.0"
-	npmVersion = "9.5.1"
-	download = true
-	npmWorkDir = file("src/main/frontend")
-}
+//node {
+//	version = "18.16.0"
+//	npmVersion = "9.5.1"
+//	download = true
+//	npmWorkDir = file("src/main/frontend")
+//}
 
 tasks.withType<KotlinCompile> {
-	dependsOn("copyWebApp")
+//	dependsOn("copyWebApp")
 	kotlinOptions {
 		freeCompilerArgs += "-Xjsr305=strict"
 		jvmTarget = "17"
@@ -56,22 +56,22 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-tasks.register<NpmTask>("appNpmInstall") {
-	description = "Installs all dependencies from package.json"
-	workingDir = file("${project.projectDir}/src/main/frontend")
-	args = listOf("install")
-}
-
-tasks.register<NpmTask>("appNpmBuild") {
-	dependsOn("appNpmInstall")
-	description = "Builds frontend project"
-	workingDir = file("${project.projectDir}/src/main/frontend")
-	args = listOf("run", "build")
-}
-
-tasks.register<Copy>("copyWebApp") {
-	dependsOn("appNpmBuild")
-	description = "Copies built project to where it will be served"
-	from("src/main/frontend/dist")
-	into("build/resources/main/static/.")
-}
+//tasks.register<NpmTask>("appNpmInstall") {
+//	description = "Installs all dependencies from package.json"
+//	workingDir = file("${project.projectDir}/src/main/frontend")
+//	args = listOf("install")
+//}
+//
+//tasks.register<NpmTask>("appNpmBuild") {
+//	dependsOn("appNpmInstall")
+//	description = "Builds frontend project"
+//	workingDir = file("${project.projectDir}/src/main/frontend")
+//	args = listOf("run", "build")
+//}
+//
+//tasks.register<Copy>("copyWebApp") {
+//	dependsOn("appNpmBuild")
+//	description = "Copies built project to where it will be served"
+//	from("src/main/frontend/dist")
+//	into("build/resources/main/static/.")
+//}
