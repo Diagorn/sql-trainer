@@ -71,7 +71,7 @@ class TaskServiceImpl(
         val taskTypes = request.taskTypeIds.map { TaskTypeEnum.ofId(it) }
         validateTaskTypes(taskTypes)
 
-        if (request.modifyingTable == null) {
+        if (request.changingTable == null) {
             taskTypes.forEach {
                 if (TaskTypeEnum.TABLE_NEEDED.contains(it)) {
                     throw WrongFieldsException("Для типа задания ${it.taskTypeName} необходимо указать изменяемую таблицу")
@@ -93,10 +93,11 @@ class TaskServiceImpl(
             description = request.description,
             weight = request.weight,
             sqlQuery = request.solution,
-            modifiedTableName = request.modifyingTable,
+            modifiedTableName = request.changingTable,
             orderImportant = orderImportant,
         )
         taskRepo.save(editedTask)
+        userAnswerRepo.deleteAllByTaskId(taskId = editedTask.id)
         return editedTask.toDto()
     }
 
@@ -140,6 +141,9 @@ class TaskServiceImpl(
     }
 
     override fun getById(id: UUID): TaskDto = doGetById(id).toDto()
+
+    override fun getByIdForEdit(taskId: UUID): TaskForEditDto = doGetById(taskId).toDtoForEdit()
+
     override fun getEntityById(id: UUID): Task = doGetById(id)
 
     private fun doGetById(id: UUID): Task = taskRepo.findById(id).orElseThrow { getNotFoundException(id) }

@@ -41,9 +41,14 @@ class TasksController(val taskService: TaskService) {
         return ResponseEntity.ok(taskService.getById(UUID.fromString(id)))
     }
 
+    @GetMapping("/{id}/edit")
+    fun getByIdForEdit(@PathVariable id: String): ResponseEntity<TaskForEditDto> {
+        return ResponseEntity.ok(taskService.getByIdForEdit(UUID.fromString(id)));
+    }
+
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    fun editTask(@PathVariable id: String, editTaskRequest: EditTaskRequest) {
+    fun editTask(@PathVariable id: String, @RequestBody editTaskRequest: EditTaskRequest) {
         taskService.editTask(UUID.fromString(id), editTaskRequest)
     }
 

@@ -7,6 +7,7 @@ import CreateTask from "@/pages/task/CreateTask.vue";
 import TaskSolution from "@/pages/task/TaskSolution.vue";
 import UserStatisticsPage from "@/pages/statistics/UserStatisticsPage.vue";
 import TaskStatisticsPage from "@/pages/statistics/TaskStatisticsPage.vue";
+import EditTask from "@/pages/task/EditTask.vue";
 
 const routes = [
     {
@@ -40,6 +41,10 @@ const routes = [
     {
         path: '/task/:taskId/statistics',
         component: TaskStatisticsPage
+    },
+    {
+        path: '/task/:taskId/edit',
+        component: EditTask
     }
 ]
 

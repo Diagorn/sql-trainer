@@ -83,6 +83,19 @@ class TaskService {
             }
         )
     }
+
+    getByIdForEdit(taskId) {
+        return axios.get(`${API_URL}/${taskId}/edit`, {
+            headers: authHeader()
+        }).then(
+            res => {
+                return res.data
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    }
 }
 
 export default new TaskService()

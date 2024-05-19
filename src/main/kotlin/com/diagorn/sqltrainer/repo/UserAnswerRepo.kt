@@ -13,4 +13,6 @@ import java.util.UUID
 @Repository
 interface UserAnswerRepo: MongoRepository<UserAnswer, UUID> {
     fun findAllByTaskId(taskId: UUID): List<UserAnswer>
+
+    fun deleteAllByTaskId(taskId: UUID)
 }

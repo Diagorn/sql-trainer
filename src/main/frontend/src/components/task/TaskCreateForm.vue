@@ -6,8 +6,16 @@ import AppRadio from "@/components/common/Radio.vue";
 export default defineComponent({
   name: "app-task-create-form",
   components: {AppRadio},
+  props: {
+    task: {
+      type: Object,
+      required: false,
+      default: null
+    }
+  },
   data() {
     return {
+      id: null,
       types: [],
       selectedTypes: [],
       title: '',
@@ -16,6 +24,7 @@ export default defineComponent({
       description: '',
       solution: '',
       changingTable: '',
+      _task: {},
     }
   },
   methods: {
@@ -34,10 +43,33 @@ export default defineComponent({
     fetchTaskTypes() {
       TaskService.getTaskTypes()
           .then(res => this.types = res)
+    },
+    fetchTask() {
+      if (!this.$props.task) {
+        return
+      }
+
+      this._task = this.$props.task
     }
   },
   mounted() {
     this.fetchTaskTypes()
+    this.fetchTask()
+  },
+  watch: {
+    _task: {
+      handler: function (_task) {
+        this.id = _task.id
+        this.selectedTypes = _task.taskTypes
+        this.title = _task.title
+        this.weight = _task.weight
+        this.orderImportant = _task.orderImportant
+        this.description = _task.description
+        this.solution = _task.solution
+        this.changingTable = _task.modifyingTable
+      },
+      immediate: true,
+    }
   }
 })
 </script>

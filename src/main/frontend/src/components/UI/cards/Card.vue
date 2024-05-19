@@ -43,9 +43,12 @@ export default defineComponent({
     },
     onQuestionClicked() {
       this.$emit('questionClick', this.objectId)
+    },
+    onEditBtnClicked() {
+      this.$emit('editClick', this.objectId)
     }
   },
-  emits: ['btnClick', 'closeClick', 'questionClick'],
+  emits: ['btnClick', 'closeClick', 'questionClick', 'editClick'],
 })
 </script>
 
@@ -60,6 +63,11 @@ export default defineComponent({
       <v-btn variant="text" @click.prevent="onCloseBtnClicked">
         <span class="material-icons">
           close
+        </span>
+      </v-btn>
+      <v-btn variant="text" @click.prevent="onEditBtnClicked">
+        <span class="material-icons">
+          edit
         </span>
       </v-btn>
     </template>

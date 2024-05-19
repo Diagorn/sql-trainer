@@ -77,4 +77,9 @@ interface TaskService {
      * Получить все категории задач
      */
     fun getTaskTypes(): List<TaskTypeDto>
+
+    /**
+     * Получить задачу для редактирования
+     */
+    fun getByIdForEdit(taskId: UUID): TaskForEditDto
 }

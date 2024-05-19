@@ -49,7 +49,7 @@ data class NewTaskRequest(
  * @param description - описание задания
  * @param weight - вес задания
  * @param solution - эталонное решение
- * @param modifyingTable - изменяемая таблица (в случае запроса не на SELECT)
+ * @param changingTable - изменяемая таблица (в случае запроса не на SELECT)
  * @param orderImportant - важен ли порядок (в случае запроса на SELECT)
  */
 data class EditTaskRequest(
@@ -58,7 +58,8 @@ data class EditTaskRequest(
     val description: String,
     val weight: Double?,
     val solution: String,
-    val modifyingTable: String?,
+    val changingTable: String?,
+    val orderImportant: Boolean?,
 )
 
 /**
@@ -78,6 +79,29 @@ data class TaskDto(
     val taskTypes: List<TaskTypeDto>,
     val description: String,
     val weight: Double?,
+)
+
+/**
+ * Данные задачи для редактирования
+ *
+ * @param id - ид задачи
+ * @param title - название задачи
+ * @param taskTypes - категории задачи
+ * @param description - описание задачи
+ * @param weight - вес задачи
+ * @param solution - решение задачи
+ * @param modifyingTable - изменяемая запросом таблица
+ * @param orderImportant - важен ли порядок сортировки
+ */
+data class TaskForEditDto(
+    val id: UUID,
+    val title: String,
+    val taskTypes: List<TaskTypeDto>,
+    val description: String,
+    val weight: Double?,
+    val solution: String,
+    val modifyingTable: String?,
+    val orderImportant: Boolean?,
 )
 
 /**

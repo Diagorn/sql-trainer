@@ -34,6 +34,9 @@ export default defineComponent({
     },
     doDeleteTask(objectId) {
       this.deleteTask(objectId)
+    },
+    redirectToEditTask(objectId) {
+      this.$router.push(`/task/${objectId}/edit`)
     }
   },
   computed: {
@@ -73,6 +76,7 @@ export default defineComponent({
                    @cardBtnClicked="redirectToSolution"
                    @cardBtnCloseClicked="doDeleteTask"
                    @cardBtnQuestionClicked="redirectToTaskStatistics"
+                   @cardBtnEditClicked="redirectToEditTask"
     />
     <h6 v-else class="text-h6">Пока что ни одной задачи нет</h6>
     <div class="position-fixed pagination-container">

@@ -62,7 +62,11 @@ export const task = {
                 )
         },
 
-        editTask({commit}, editedTask, taskId) {
+        editTask({commit}, editedTask) {
+            const taskId = editedTask.id
+            editedTask.id = undefined
+            console.log(editedTask)
+            console.log(taskId)
             return TaskService.editTask(editedTask, taskId)
                 .then(
                     response => {
