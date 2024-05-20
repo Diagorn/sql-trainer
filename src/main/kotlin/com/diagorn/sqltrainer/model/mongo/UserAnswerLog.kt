@@ -18,7 +18,7 @@ import java.util.*
  */
 @Document(collection = "userAnswerLogs")
 data class UserAnswerLog(
-    @Id val id: UUID,
+    @Id val id: UUID?,
     val createDate: LocalDateTime,
     val sqlQuery: String,
     val userId: UUID,

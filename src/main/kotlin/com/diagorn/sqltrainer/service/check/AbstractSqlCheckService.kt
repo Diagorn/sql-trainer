@@ -39,44 +39,55 @@ abstract class AbstractSqlCheckService(
      */
     fun execute(sql: String, task: Task): TaskResult {
 
-        validate(sql, task)
+        try {
+            validate(sql, task)
 
-        val sqlExecutionTime: Long
-        val taskSqlExecutionTime: Long
-        val queryResults: List<Row>
-        val taskQueryResults: List<Row>
+            val sqlExecutionTime: Long
+            val taskSqlExecutionTime: Long
+            val queryResults: List<Row>
+            val taskQueryResults: List<Row>
 
-        // Выполняем пользовательский SQL
-        val sqlResult = doExecute(sql, task)
-        queryResults = sqlResult.first
-        sqlExecutionTime = sqlResult.second
+            // Выполняем пользовательский SQL
+            val sqlResult = doExecute(sql, task)
+            queryResults = sqlResult.first
+            sqlExecutionTime = sqlResult.second
 
-        // Выполняем SQL из задания
-        val taskSqlResult = doExecute(task.sqlQuery, task)
-        taskQueryResults = taskSqlResult.first
-        taskSqlExecutionTime = taskSqlResult.second
+            // Выполняем SQL из задания
+            val taskSqlResult = doExecute(task.sqlQuery, task)
+            taskQueryResults = taskSqlResult.first
+            taskSqlExecutionTime = taskSqlResult.second
 
-        // Рассчитываем равенство
-        if (!compareEquality(
-            userRs = queryResults,
-            taskRs = taskQueryResults,
-            task = task
-        )) {
-            throw BadSqlException(COMPARISON_FAILED)
+            // Рассчитываем равенство
+            if (!compareEquality(
+                    userRs = queryResults,
+                    taskRs = taskQueryResults,
+                    task = task
+                )) {
+                throw BadSqlException(COMPARISON_FAILED)
+            }
+
+            // Рассчитываем разницу во времени исполнения в процентах
+            val executionTimeDifference = countExecutionTimeDifference(sqlExecutionTime, taskSqlExecutionTime)
+
+            // Рассчитываем разницу в длине
+            val sqlLengthDifference = countSqlLengthDifference(sql, task.sqlQuery)
+
+            return TaskResult(
+                contentsEqual = true,
+                executionTimeDifference = executionTimeDifference,
+                contentLengthDifference = sqlLengthDifference
+            )
+        } catch (e: Exception) {
+            return getExceptionTaskResult(e)
         }
-
-        // Рассчитываем разницу во времени исполнения в процентах
-        val executionTimeDifference = countExecutionTimeDifference(sqlExecutionTime, taskSqlExecutionTime)
-
-        // Рассчитываем разницу в длине
-        val sqlLengthDifference = countSqlLengthDifference(sql, task.sqlQuery)
-
-        return TaskResult(
-            contentsEqual = true,
-            executionTimeDifference = executionTimeDifference,
-            contentLengthDifference = sqlLengthDifference
-        )
     }
+
+    private fun getExceptionTaskResult(e: Exception): TaskResult = TaskResult(
+        contentsEqual = false,
+        executionTimeDifference = 0.0,
+        contentLengthDifference = 0.0,
+        comment = e.message
+    )
 
     private fun doExecute(
         sql: String,
@@ -105,7 +116,7 @@ abstract class AbstractSqlCheckService(
         var executionTimeDifference = 100.0;
         if (sqlExecutionTime > taskSqlExecutionTime && sqlExecutionTime != 0L && taskSqlExecutionTime != 0L) {
             executionTimeDifference =
-                100.0 - (sqlExecutionTime.toDouble() - taskSqlExecutionTime.toDouble()) / taskSqlExecutionTime * 100
+                100.0 - (sqlExecutionTime.toDouble() - taskSqlExecutionTime.toDouble()) / taskSqlExecutionTime * 100.0
         }
         return executionTimeDifference
     }
@@ -114,7 +125,7 @@ abstract class AbstractSqlCheckService(
         var sqlLengthDifference = 100.0
         if (sql.length > taskSql.length) {
             sqlLengthDifference =
-                100.0 - (sql.length.toDouble() - taskSql.length.toDouble()) / taskSql.length * 100
+                100.0 - (sql.length.toDouble() - taskSql.length.toDouble()) / taskSql.length * 100.0
         }
         return sqlLengthDifference
     }
@@ -180,6 +191,6 @@ abstract class AbstractSqlCheckService(
         const val FAILED_TASK_SQL = "Не удалось выполнить эталонный SQL-запрос из задания. " +
                 "Обратитесь к своему преподавателю"
         const val SOMETHING_WENT_WRONG = "Что-то пошло не так. Попробуйте позже"
-        const val COMPARISON_FAILED = "Введённый запрос не верен"
+        const val COMPARISON_FAILED = "Запрос выдаёт неправильную выборку данных"
     }
 }

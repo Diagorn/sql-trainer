@@ -10,6 +10,7 @@ import java.util.UUID
  * @param contentsEqual - равен ли между собой контент попытки студента и эталонного решения
  * @param executionTimeDifference - процент скорости исполнения запроса от скорости исполнения эталонного решения
  * @param contentLengthDifference - процент длины запроса от длины эталонного решения
+ * @param comment - комментарий. Заполняется в случае ошибочной отработки
  *
  * @author Diagorn
  */
@@ -17,7 +18,15 @@ data class TaskResult(
     val contentsEqual: Boolean,
     val executionTimeDifference: Double,
     val contentLengthDifference: Double,
-)
+    val comment: String?,
+) {
+    constructor(contentsEqual: Boolean, executionTimeDifference: Double, contentLengthDifference: Double) : this(
+        contentsEqual,
+        executionTimeDifference,
+        contentLengthDifference,
+        null
+    )
+}
 
 /**
  * Запрос на создание новой задачи

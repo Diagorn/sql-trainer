@@ -55,9 +55,14 @@ export default defineComponent({
         return ''
       }
 
-      return '100%'
+      return 'Запрос отработал корректно, вывел все нужные данные.'
     },
     timePercent() {
+      console.log(this.results.executionTimeDifference)
+      if (this.results.comment === 'Запрос выдаёт неправильную выборку данных') {
+        return 'Время - 0%'
+      }
+
       if (!this.results.executionTimeDifference) {
         return ''
       }
@@ -65,6 +70,10 @@ export default defineComponent({
       return `Время - ${this.results.executionTimeDifference}%`
     },
     lengthPercent() {
+      if (this.results.comment === 'Запрос выдаёт неправильную выборку данных') {
+        return 'Длина запроса - 0%'
+      }
+
       if (!this.results.contentLengthDifference) {
         return ''
       }
@@ -87,6 +96,7 @@ export default defineComponent({
         <v-col cols="4">
           <div v-if="results" class="right-block">
             <v-sheet class="pa-2 ma-2">
+              <p class="text-red">{{ results.comment }}</p>
               <h6 class="text-h6 mb-3"> {{ resultsPercent }} </h6>
               <p class="text-body-1"> {{ timePercent }} </p>
               <p class="text-body-1 mb-10"> {{ lengthPercent }} </p>
