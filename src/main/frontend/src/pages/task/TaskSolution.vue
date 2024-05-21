@@ -89,7 +89,7 @@ export default defineComponent({
           return ''
         }
       } else {
-        return `Балл за задание: ${getTaskMark(this.results.userExecutionTime, this.results.taskExecutionTime, this.results.contentLengthDifference, this.task.weight)}`
+        return `Балл за задание: ${getTaskMark(this.results.userExecutionTime, this.results.taskExecutionTime, this.results.contentLengthDifference, this.task.weight)}/${this.task.weight}`
       }
     }
   }
