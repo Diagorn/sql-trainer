@@ -29,7 +29,8 @@ class UserAnswerServiceImpl(
             taskId = task.id,
             userId = user.id,
             passed = solution.contentsEqual,
-            executionTimeDifference = solution.executionTimeDifference,
+            userExecutionTime = solution.userExecutionTime,
+            taskExecutionTime = solution.taskExecutionTime,
             answerLengthDifference = solution.contentLengthDifference,
             answerDate = LocalDateTime.now()
         ))

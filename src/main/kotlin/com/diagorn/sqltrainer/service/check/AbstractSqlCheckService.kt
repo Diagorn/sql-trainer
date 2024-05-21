@@ -74,8 +74,9 @@ abstract class AbstractSqlCheckService(
 
             return TaskResult(
                 contentsEqual = true,
-                executionTimeDifference = executionTimeDifference,
-                contentLengthDifference = sqlLengthDifference
+                userExecutionTime = sqlExecutionTime,
+                taskExecutionTime = taskSqlExecutionTime,
+                contentLengthDifference = sqlLengthDifference,
             )
         } catch (e: Exception) {
             return getExceptionTaskResult(e)
@@ -84,7 +85,8 @@ abstract class AbstractSqlCheckService(
 
     private fun getExceptionTaskResult(e: Exception): TaskResult = TaskResult(
         contentsEqual = false,
-        executionTimeDifference = 0.0,
+        userExecutionTime = 0,
+        taskExecutionTime = 0,
         contentLengthDifference = 0.0,
         comment = e.message
     )

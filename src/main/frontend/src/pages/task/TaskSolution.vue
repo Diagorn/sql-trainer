@@ -4,6 +4,7 @@ import AppNavbar from "@/components/common/Navbar.vue";
 import AppTaskSolveForm from "@/components/task/TaskSolveForm.vue";
 import TaskService from "@/services/task.service.js";
 import SolutionService from "@/services/solution.service.js";
+import {getTaskMark} from "@/helper/math.helper.js";
 
 export default defineComponent({
   name: "app-task-solution",
@@ -80,6 +81,17 @@ export default defineComponent({
 
       return `Длина запроса - ${this.results.contentLengthDifference}%`
     },
+    taskMark() {
+      if (this.results.comment) {
+        if (this.results.comment === 'Не удалось выполнить эталонный SQL-запрос из задания. Обратитесь к своему преподавателю') {
+          return `Балл за задание: 0/${this.task.weight}`
+        } else {
+          return ''
+        }
+      } else {
+        return `Балл за задание: ${getTaskMark(this.results.userExecutionTime, this.results.taskExecutionTime, this.results.contentLengthDifference, this.task.weight)}`
+      }
+    }
   }
 })
 </script>
@@ -98,10 +110,13 @@ export default defineComponent({
             <v-sheet class="pa-2 ma-2">
               <p class="text-red">{{ results.comment }}</p>
               <h6 class="text-h6 mb-3"> {{ resultsPercent }} </h6>
-              <p class="text-body-1"> {{ timePercent }} </p>
+              <p v-if="results.userExecutionTime" class="text-body-1">Время выполнения запроса - {{ results.userExecutionTime }} мс</p>
+              <p v-if="results.taskExecutionTime" class="text-body-1">Эталонное время выполнения запроса - {{ results.taskExecutionTime }} мс</p>
               <p class="text-body-1 mb-10"> {{ lengthPercent }} </p>
 
-              <h4 class="text-h4"></h4>
+              <v-spacer/>
+
+              <h5 class="text-h5"> {{ taskMark }} </h5>
             </v-sheet>
           </div>
           <div v-else>

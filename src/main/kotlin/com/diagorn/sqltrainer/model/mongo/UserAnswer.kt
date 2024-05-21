@@ -13,7 +13,6 @@ import java.util.UUID
  * @param taskId - ид решаемой задачи
  * @param userId - ид пользователя, чье это решение
  * @param passed - прошёл ли ответ
- * @param executionTimeDifference - процент скорости исполнения запроса от скорости исполнения эталонного решения
  * @param answerLengthDifference - процент длины запроса от длины эталонного решения
  * @param answerDate - дата ответа
  */
@@ -23,13 +22,15 @@ data class UserAnswer(
     val taskId: UUID,
     val userId: UUID,
     val passed: Boolean,
-    val executionTimeDifference: Double,
+    val userExecutionTime: Long?,
+    val taskExecutionTime: Long?,
     val answerLengthDifference: Double,
     val answerDate: LocalDateTime,
 ) {
     fun toTaskResult() = TaskResult(
         contentsEqual = this.passed,
-        executionTimeDifference = this.executionTimeDifference,
+        userExecutionTime = this.userExecutionTime,
+        taskExecutionTime = this.taskExecutionTime,
         contentLengthDifference = this.answerLengthDifference,
     )
 }

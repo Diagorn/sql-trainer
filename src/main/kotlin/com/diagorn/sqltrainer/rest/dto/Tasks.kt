@@ -16,15 +16,17 @@ import java.util.UUID
  */
 data class TaskResult(
     val contentsEqual: Boolean,
-    val executionTimeDifference: Double,
     val contentLengthDifference: Double,
+    val userExecutionTime: Long?,
+    val taskExecutionTime: Long?,
     val comment: String?,
 ) {
-    constructor(contentsEqual: Boolean, executionTimeDifference: Double, contentLengthDifference: Double) : this(
-        contentsEqual,
-        executionTimeDifference,
-        contentLengthDifference,
-        null
+    constructor(contentsEqual: Boolean, userExecutionTime: Long?, taskExecutionTime: Long?, contentLengthDifference: Double) : this(
+        contentsEqual = contentsEqual,
+        userExecutionTime = userExecutionTime,
+        taskExecutionTime = taskExecutionTime,
+        contentLengthDifference = contentLengthDifference,
+        comment = null
     )
 }
 
