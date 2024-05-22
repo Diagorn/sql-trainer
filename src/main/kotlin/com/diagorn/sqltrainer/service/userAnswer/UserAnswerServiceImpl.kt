@@ -9,6 +9,7 @@ import com.diagorn.sqltrainer.rest.dto.TaskResult
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.math.round
 
 @Service
 class UserAnswerServiceImpl(
@@ -31,7 +32,7 @@ class UserAnswerServiceImpl(
             passed = solution.contentsEqual,
             userExecutionTime = solution.userExecutionTime,
             taskExecutionTime = solution.taskExecutionTime,
-            answerLengthDifference = solution.contentLengthDifference,
+            answerLengthDifference = round(solution.contentLengthDifference * 100.0) / 100.0,
             answerDate = LocalDateTime.now()
         ))
     }
