@@ -16,6 +16,7 @@ class PostgresMainConnectionProperties(
     val jdbcUrl: String,
     val username: String,
     val password: String,
+    val driverClassName: String,
 )
 
 /**
@@ -24,6 +25,7 @@ class PostgresMainConnectionProperties(
  * @param jdbcUrl - урл подключения к бд
  * @param username - логин
  * @param password - пароль
+ * @param driverClassName - имя драйвера
  *
  * @author Diagorn
  */
@@ -32,4 +34,5 @@ class PostgresConnectionProperties(
     val jdbcUrl: String,
     val username: String,
     val password: String,
+    val driverClassName: String,
 )

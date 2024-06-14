@@ -10,11 +10,13 @@ spring:
       jdbcUrl: ${POSTGRES-URL:jdbc:postgresql://localhost:5432/my_db}
       username: ${POSTGRES-USER:root}
       password: ${POSTGRES-PASSWORD:root}
+      driver-class-name: org.postgresql.Driver
 
     postgres-test:
       jdbcUrl: ${POSTGRES-TEST-URL:jdbc:postgresql://localhost:5432/sql_trainer}
       username: ${POSTGRES-USER:root}
       password: ${POSTGRES-PASSWORD:root}
+      driver-class-name: org.postgresql.Driver
 
   liquibase:
     enabled: false

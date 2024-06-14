@@ -34,6 +34,7 @@ class PostgresConfig(
             jdbcUrl = postgresConnectionProperties.jdbcUrl
             username = postgresConnectionProperties.username
             password = postgresConnectionProperties.password
+            driverClassName = postgresConnectionProperties.driverClassName
             isAutoCommit = false
         })
 

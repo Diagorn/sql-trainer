@@ -25,6 +25,7 @@ class PostgresSetupConfig(
             jdbcUrl = postgresMainConnectionProperties.jdbcUrl
             username = postgresMainConnectionProperties.username
             password = postgresMainConnectionProperties.password
+            driverClassName = postgresMainConnectionProperties.driverClassName
             isAutoCommit = true
         }
         return HikariDataSource(config)
