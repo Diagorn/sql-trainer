@@ -12,4 +12,10 @@ import java.util.UUID
  */
 @Repository
 interface TaskRepo: MongoRepository<Task, UUID> {
+    /**
+     * Найти задачу по её названию
+     *
+     * @param title - название задачи
+     */
+    fun findByTitle(title: String): Task?
 }
